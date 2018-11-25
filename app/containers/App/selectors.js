@@ -8,8 +8,11 @@ const selectGlobal = state => state.get('global');
 
 const selectRoute = state => state.get('route');
 
-const makeSelectCurrentUser = () =>
-  createSelector(selectGlobal, globalState => globalState.get('currentUser'));
+const makeSelectEmail = () => {
+  const email = globalState => globalState.get('email');
+  console.log(globalState);
+  return email;
+};
 
 const makeSelectRepos = () =>
   createSelector(selectGlobal, globalState =>
@@ -31,17 +34,10 @@ const isLogin = () =>
 /**
  * @return {Object} currently logged in user info.
  */
-const loggedInInfo = () =>
-  createSelector(selectGlobal, globalState => {
-    if (globalState.get('loggedInInfo') !== null) {
-      return globalState.get('loggedInInfo').toJS();
-    }
-    return null;
-  });
 
 export {
   selectGlobal,
-  makeSelectCurrentUser,
+  makeSelectEmail,
   makeSelectRepos,
   makeSelectLocation,
   isLogin,

@@ -2,8 +2,8 @@ import { takeLatest, call, put, select } from 'redux-saga/effects';
 import * as c from './constants';
 import * as a from './actions';
 import * as api from './api';
-import makeSelectNewsPage from '../Login/selectors';
-
+import { makeSelectEmail } from '../App/selectors';
+import { loggedInAction } from '../App/actions';
 export function* index(action) {
   try {
     const response = yield call(api.fetchPosts, action.payload);
@@ -15,10 +15,10 @@ export function* index(action) {
 
 export function* fetchUser() {
   try {
-    const { email } = yield select(makeSelectNewsPage());
-    yield put(a.userInfo(response.data));
+    const { email } = yield select(makeSelectEmail());
+    console.log(email);
     const response = yield call(api.fetchUser, email);
-    console.log(response); // here is the user is get now please use response to save the user.
+    yield put(loggedInAction(response.data)); // here is the user is get now please use response to save the user.
   } catch (error) {}
 }
 // Individual exports for testing

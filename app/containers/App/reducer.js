@@ -8,7 +8,6 @@ const user = loadState();
 // The initial state of the App
 const initialState = fromJS({
   loggedInInfo: {},
-  currentUser: {},
   email: {},
 });
 
