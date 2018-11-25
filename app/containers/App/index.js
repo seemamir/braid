@@ -16,15 +16,21 @@ import Home from 'containers/Home/Loadable';
 import Footer from 'components/Footer/Loadable';
 import NewsPage from 'containers/NewsPage/Loadable';
 import ViewNews from 'containers/ViewNews/Loadable';
+
+import { createStructuredSelector } from 'reselect';
 import AddNews from 'containers/AddNews/Loadable';
 import ResetPassword from 'containers/ResetPassword/Loadable';
 import SocialLoginDone from 'containers/SocialLoginDone/Loadable';
+import { compose } from 'redux';
+import { selectGlobal} from "./selectors";
 import ForgetPassword from 'containers/ForgetPassword/Loadable';
+
+import { connect } from 'react-redux';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import GlobalStyle from '../../global-styles';
 
-export default function App() {
+export function App() {
   return (
     <div>
       <Switch>
@@ -44,3 +50,23 @@ export default function App() {
     </div>
   );
 }
+
+
+
+const mapStateToProps = createStructuredSelector({
+  global: selectGlobal()
+});
+
+
+
+const withConnect = connect(
+  mapStateToProps,
+);
+
+
+
+export default compose(
+  // withReducer,
+  // withSaga,
+  withConnect,
+)(App);

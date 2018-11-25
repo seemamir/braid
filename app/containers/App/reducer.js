@@ -11,6 +11,8 @@ const initialState = fromJS({
   email: {},
 });
 
+
+
 function appReducer(state = initialState, action) {
   switch (action.type) {
     case c.LOGGED_IN_USER:
