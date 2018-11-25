@@ -28,41 +28,38 @@ export class Login extends React.Component {
   handleSignup = () => {
     this.props.history.push('/signup');
   };
-  
+
   prepareLogin(a) {
     a.username = a.email;
     a.password1 = 'socialpassword/12345';
     a.password2 = 'socialpassword/12345';
     a.password = 'socialpassword/12345';
-    this.props.createAccount(a)
+    this.props.createAccount(a);
     setTimeout(() => {
       const { response } = this.props.login;
-    
+
       if (response && response.status && response.status === 200) {
-        localStorage.setItem('email',a.email)
+        localStorage.setItem('email', a.email);
         this.props.history.push('/home');
       }
     }, 1000);
   }
-  
 
   handleSubmit = e => {
     e.preventDefault();
 
     this.props.form.validateFields((err, values) => {
-     
       if (!err) {
-        this.props.loginAction({username: values.email, ...values});
-       
+        this.props.loginAction({ username: values.email, ...values });
       }
     });
     setTimeout(() => {
       const { response } = this.props.login;
       if (response && response.status && response.status === 200) {
         this.props.form.validateFields((err, values) => {
-          localStorage.setItem('email',values.email)
+          localStorage.setItem('email', values.email);
           this.props.history.push('/home');
-        })
+        });
       }
     }, 1000);
   };
@@ -110,7 +107,6 @@ export class Login extends React.Component {
       window.IN.API.Profile('me')
         .fields('id', 'first-name', 'last-name', 'email-address', 'picture-url')
         .result(res => {
-          
           this.prepareLogin({
             email: res.values[0].emailAddress,
             image: res.values[0].pictureUrl,

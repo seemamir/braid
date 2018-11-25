@@ -19,6 +19,11 @@ const { Content } = Layout;
 export class Home extends React.Component {
   componentDidMount() {
     this.props.fetchPosts();
+    this.props.fetchUser();
+  }
+
+  filter = (category) => {
+    this.props.fetchPosts(category)
   }
 
   viewPost = id => {
@@ -41,6 +46,15 @@ export class Home extends React.Component {
           <Layout style={{ marginLeft: '200px' }}>
             <Header />
             <Content className="content">
+              <div className='filters' >
+                <Button onClick={ () => this.filter('') } style={{marginRight: '10px',marginBottom: '20px'}} size="small">All</Button>
+                <Button onClick={ () => this.filter('Economy') } style={{marginRight: '10px',marginBottom: '20px'}} size="small">Economy</Button>
+                <Button onClick={ () => this.filter('Politics') } style={{marginRight: '10px',marginBottom: '20px'}} size="small">Politics</Button>
+                <Button onClick={ () => this.filter('Tech') } style={{marginRight: '10px',marginBottom: '20px'}} size="small">Tech</Button>
+                <Button onClick={ () => this.filter('Life') } style={{marginRight: '10px',marginBottom: '20px'}} size="small">Life</Button>
+                <Button onClick={ () => this.filter('Entertainment') } style={{marginRight: '10px',marginBottom: '20px'}} size="small">Entertainment</Button>
+                <Button onClick={ () => this.filter('Opinion') } style={{marginRight: '10px',marginBottom: '20px'}} size="small">Opinion</Button>
+              </div>
               <Button onClick={this.handleRedirect} type="primary">
                 Add new post
               </Button>
@@ -89,7 +103,8 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    fetchPosts: () => dispatch(a.fetchPosts()),
+    fetchPosts: (category = '') => dispatch(a.fetchPosts(category)),
+    fetchUser: () => dispatch(a.fetchUser(localStorage.getItem('email'))),
   };
 }
 
