@@ -20,6 +20,8 @@ function loginReducer(state = initialState, action) {
       return state.set('response', action.payload);
     case c.RESET_RESPONSE:
       return state.set('response', {});
+    case c.SOCIAL_INFO:
+      return state.set('socialInfo', action.payload);
     default:
       return state;
   }
