@@ -29,7 +29,11 @@ const GlobalStyle = createGlobalStyle`
     background: white;
     padding:20px;
   }
- 
+ textarea{
+   border: 1px solid #eee;
+   width: 100%;
+   padding: 8px
+ }
   p { 
     color: #999
   }
@@ -136,6 +140,11 @@ const GlobalStyle = createGlobalStyle`
     .ant-upload {
       width: 128px;
       height: 128px;
+    }
+    img{
+      width: 128px;
+      height: 128px;
+      border-radius:50%;
     }
   }
   .news-box{

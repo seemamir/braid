@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Row, Col, Card, Upload, Icon, message } from 'antd';
+import { Row, Col, Card, Upload, Icon, message, Button } from 'antd';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import makeSelectNewsPage from './selectors';
@@ -27,15 +27,11 @@ export class NewsPage extends React.Component {
   };
 
   beforeUpload = file => {
-    const isJPG = file.type === 'image/jpeg';
-    if (!isJPG) {
-      message.error('You can only upload JPG file!');
-    }
     const isLt2M = file.size / 1024 / 1024 < 2;
     if (!isLt2M) {
       message.error('Image must smaller than 2MB!');
     }
-    return isJPG && isLt2M;
+    return isLt2M;
   };
 
   handleChange = info => {
@@ -51,6 +47,7 @@ export class NewsPage extends React.Component {
           loading: false,
         }),
       );
+      console.log(this.state);
     }
   };
 
@@ -91,15 +88,25 @@ export class NewsPage extends React.Component {
             </Col>
             <Col span={14}>
               <Card>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Dolorem, ullam molestiae quod consequuntur nam, in cumque
-                debitis alias fugit, incidunt fuga quos excepturi. Non, nisi
-                ullam omnis labore vel praesentium. Lorem ipsum dolor sit, amet
-                consectetur adipisicing elit. Architecto commodi nisi odio
-                magnam velit reiciendis aperiam natus, fugiat ratione illo
-                sapiente esse ducimus odit. Quibusdam magnam aut unde laboriosam
-                facere?
+                <textarea
+                  name="bio"
+                  rows="5"
+                  id="bio"
+                  style={{ width: '100%' }}
+                  value=" Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                  Dolorem, ullam molestiae quod consequuntur nam, in cumque
+                  debitis alias fugit, incidunt fuga quos excepturi. Non, nisi
+                  ullam omnis labore vel praesentium. Lorem ipsum dolor sit,
+                  amet consectetur adipisicing elit. Architecto commodi nisi
+                  odio magnam velit reiciendis aperiam natus, fugiat ratione
+                  illo sapiente esse ducimus odit. Quibusdam magnam aut unde
+                  laboriosam facere?"
+                  placeholder="Enter your bio"
+                />
               </Card>
+              <Button type="primary" style={{ marginTop: '20px' }}>
+                Save
+              </Button>
             </Col>
           </Row>
         </div>

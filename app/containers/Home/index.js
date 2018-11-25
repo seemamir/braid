@@ -21,6 +21,10 @@ export class Home extends React.Component {
     this.props.fetchPosts();
   }
 
+  viewPost = id => {
+    this.props.history.push(`/view/${id}`);
+  };
+
   render() {
     return (
       <div>
@@ -37,27 +41,25 @@ export class Home extends React.Component {
                 itemLayout="vertical"
                 size="large"
                 pagination={{
-                  onChange: page => {
-                    console.log(page);
-                  },
                   pageSize: 3,
                 }}
                 dataSource={this.props.home.news}
                 renderItem={item => (
                   <List.Item
+                    onClick={() => this.viewPost(item.id)}
                     key={item.title}
                     extra={
                       <img
                         width={272}
-                        alt="logo"
-                        src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+                        alt="No image logo"
+                        src={item.thumbnail_image}
                       />
                     }
                   >
                     <List.Item.Meta
                       avatar={<Avatar src={item.avatar} />}
                       title={<a href={item.href}>{item.title}</a>}
-                      description={item.description}
+                      description={item.main_sentence}
                     />
                     {item.content}
                   </List.Item>

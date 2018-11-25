@@ -17,3 +17,9 @@ export function viewPost(id) {
     id,
   };
 }
+export function setPost(payload) {
+  return {
+    type: c.SET_POST,
+    payload,
+  };
+}
