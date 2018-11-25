@@ -6,10 +6,12 @@ import * as c from './constants';
 const user = loadState();
 
 // The initial state of the App
-const initialState = fromJS({
+export const initialState = fromJS({
   loggedInInfo: user,
   currentUser: {},
 });
+
+
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
