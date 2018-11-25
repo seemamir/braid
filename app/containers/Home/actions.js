@@ -12,9 +12,14 @@ export function defaultAction() {
   };
 }
 
-export function fetchPosts(payload) {
+export function fetchPosts() {
   return {
     type: c.FETCH_POSTS,
+  };
+}
+export function setPosts(payload) {
+  return {
+    type: c.SET_POSTS,
     payload,
   };
 }
