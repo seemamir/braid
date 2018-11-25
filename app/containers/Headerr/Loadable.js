@@ -1,6 +1,6 @@
 /**
  *
- * Asynchronously loads the component for Navbar
+ * Asynchronously loads the component for Headerr
  *
  */
 

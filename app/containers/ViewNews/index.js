@@ -12,14 +12,14 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
 import injectSaga from 'utils/injectSaga';
-import {get} from "lodash"
+import { get } from 'lodash';
 import injectReducer from 'utils/injectReducer';
 import { Row, Col, Icon, Button } from 'antd';
 import styled from 'styled-components';
 import makeSelectViewNews from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import Header from '../../components/Navbar/Loadable';
+import Header from '../Headerr/Loadable';
 import * as a from './actions';
 const Wrapper = styled.div`
   margin: 20px auto;
@@ -50,25 +50,32 @@ export class ViewNews extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      commentField: ''
-    }
+      commentField: '',
+    };
   }
+
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.viewPost(id);
   }
 
+  handleRedirect = () => {
+    this.props.history.push('/news-page');
+  };
+
   publishComment = () => {
-    let {state: {commentField}} = this;
+    const {
+      state: { commentField },
+    } = this;
     if (commentField) {
-      this.props.match.params['id']
+      this.props.match.params.id;
       this.props.comment({
         comment: this.state.commentField,
-        post: parseInt(get(this,'props.match.params.id',null)),
-        user: 1
-      })
+        post: parseInt(get(this, 'props.match.params.id', null)),
+        user: 1,
+      });
     }
-  }
+  };
 
   render() {
     const { post } = this.props.viewNews;
@@ -122,13 +129,20 @@ export class ViewNews extends React.Component {
                         <textarea
                           name="comment"
                           rows="3"
-                          onChange={(e) => this.setState({commentField: e.target.value}) }
+                          onChange={e =>
+                            this.setState({ commentField: e.target.value })
+                          }
                           placeholder="Write ur comment here"
                         />
-                        { this.state.commentField }
+                        {this.state.commentField}
                       </Col>
                       <Col span={4}>
-                        <Button onClick={() => this.publishComment() } type="primary">Publish</Button>
+                        <Button
+                          onClick={() => this.publishComment()}
+                          type="primary"
+                        >
+                          Publish
+                        </Button>
                       </Col>
                     </Row>
                   </Col>

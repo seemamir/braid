@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Layout, List, Avatar, Icon } from 'antd';
+import { Layout, List, Avatar, Button } from 'antd';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import makeSelectHome from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import Header from '../../components/Navbar/Loadable';
+import Header from '../Headerr/Loadable';
 import Sidebar from '../../components/Sidebar/Loadable';
 import * as a from './actions';
 const { Content } = Layout;
@@ -25,6 +25,10 @@ export class Home extends React.Component {
     this.props.history.push(`/view/${id}`);
   };
 
+  handleRedirect = () => {
+    this.props.history.push('/add-news');
+  };
+
   render() {
     return (
       <div>
@@ -37,6 +41,9 @@ export class Home extends React.Component {
           <Layout style={{ marginLeft: '200px' }}>
             <Header />
             <Content className="content">
+              <Button onClick={this.handleRedirect} type="primary">
+                Add new post
+              </Button>
               <List
                 itemLayout="vertical"
                 size="large"
