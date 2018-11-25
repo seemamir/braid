@@ -17,3 +17,9 @@ export function addPost(payload) {
     payload,
   };
 }
+export function setResponse(payload) {
+  return {
+    type: c.SET_RESPONSE,
+    payload,
+  };
+}
