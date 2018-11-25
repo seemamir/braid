@@ -2,7 +2,7 @@ import axios from 'axios';
 import history from '../history';
 import { accessToken, loadState, clearState } from './persistState';
 
-const ip = 'http://emr.genensys.com:8080/Backend/api';
+const ip = 'http://localhost:8000';
 
 const api = axios.create({
   baseURL: ip,

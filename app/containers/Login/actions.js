@@ -4,10 +4,35 @@
  *
  */
 
-import { DEFAULT_ACTION } from './constants';
+import * as c from './constants';
 
 export function defaultAction() {
   return {
-    type: DEFAULT_ACTION,
+    type: c.DEFAULT_ACTION,
+  };
+}
+
+export function loginAction(payload) {
+  return {
+    type: c.LOGIN_ACTION,
+    payload,
+  };
+}
+export function setResponse(payload) {
+  return {
+    type: c.SET_RESPONSE,
+    payload,
+  };
+}
+export function resetResponse() {
+  return {
+    type: c.RESET_RESPONSE,
+  };
+}
+
+export function unmountRedux(payload) {
+  return {
+    type: c.UNMOUNT_REDUX,
+    payload,
   };
 }

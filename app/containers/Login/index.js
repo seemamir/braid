@@ -6,22 +6,50 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Form, Icon, Input, Button, Row, Col } from 'antd';
+import { Form, Icon, Input, Button, Row, Col, Alert } from 'antd';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import makeSelectLogin from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import SocialIcon from '../../components/SocialIcon/Loadable';
+import * as a from './actions';
 const FormItem = Form.Item;
 /* eslint-disable react/prefer-stateless-function */
 export class Login extends React.Component {
+  componentDidMount() {
+    this.props.reset();
+  }
+
+  componentWillMount() {
+    this.props.unmount();
+  }
+
   handleSignup = () => {
     this.props.history.push('/signup');
   };
 
+  handleSubmit = e => {
+    e.preventDefault();
+
+    this.props.form.validateFields((err, values) => {
+      console.log(values);
+      if (!err) {
+        this.props.loginAction(values);
+      }
+    });
+    setTimeout(() => {
+      const { response } = this.props.login;
+      console.log(response);
+      if (response && response.status && response.status === 200) {
+        this.props.history.push('/home');
+      }
+    }, 1000);
+  };
+
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { response } = this.props.login;
     return (
       <div>
         <Helmet>
@@ -35,11 +63,11 @@ export class Login extends React.Component {
               <h3>Login to your account</h3>
               <Form onSubmit={this.handleSubmit} className="login-form">
                 <FormItem>
-                  {getFieldDecorator('userName', {
+                  {getFieldDecorator('email', {
                     rules: [
                       {
                         required: true,
-                        message: 'Please input your username!',
+                        message: 'Please input your email!',
                       },
                     ],
                   })(
@@ -50,7 +78,7 @@ export class Login extends React.Component {
                           style={{ color: 'rgba(0,0,0,.25)' }}
                         />
                       }
-                      placeholder="Username"
+                      placeholder="Email"
                     />,
                   )}
                 </FormItem>
@@ -75,8 +103,21 @@ export class Login extends React.Component {
                     />,
                   )}
                 </FormItem>
+                {response &&
+                  response.status &&
+                  response.status !== 200 && (
+                    <Alert
+                      message="Invalid credentials"
+                      type="error"
+                      showIcon
+                    />
+                  )}
                 <FormItem>
-                  <Button type="primary" className="login-form-button">
+                  <Button
+                    type="primary"
+                    className="login-form-button"
+                    htmlType="submit"
+                  >
                     Login <Icon type="login" />
                   </Button>
                   <div className="login-form-forgot">
@@ -122,6 +163,9 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    loginAction: payload => dispatch(a.loginAction(payload)),
+    unmount: payload => dispatch(a.unmountRedux(payload)),
+    reset: () => dispatch(a.resetResponse()),
   };
 }
 

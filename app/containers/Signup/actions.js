@@ -4,10 +4,24 @@
  *
  */
 
-import { DEFAULT_ACTION } from './constants';
+import * as c from './constants';
 
 export function defaultAction() {
   return {
-    type: DEFAULT_ACTION,
+    type: c.DEFAULT_ACTION,
+  };
+}
+
+export function createAccount(payload) {
+  return {
+    type: c.CREATE_ACCOUNT,
+    payload,
+  };
+}
+
+export function setResponse(payload) {
+  return {
+    type: c.SET_RESPONSE,
+    payload,
   };
 }

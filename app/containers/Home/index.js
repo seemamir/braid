@@ -12,6 +12,7 @@ import reducer from './reducer';
 import saga from './saga';
 import Header from '../../components/Navbar/Loadable';
 import Sidebar from '../../components/Sidebar/Loadable';
+import * as a from './actions';
 const { Content } = Layout;
 
 const listData = [];
@@ -35,6 +36,10 @@ const IconText = ({ type, text }) => (
 );
 /* eslint-disable react/prefer-stateless-function */
 export class Home extends React.Component {
+  componentDidMount() {
+    this.props.fetchPosts();
+  }
+
   render() {
     return (
       <div>
@@ -60,11 +65,6 @@ export class Home extends React.Component {
                 renderItem={item => (
                   <List.Item
                     key={item.title}
-                    actions={[
-                      <IconText type="star-o" text="156" />,
-                      <IconText type="like-o" text="156" />,
-                      <IconText type="message" text="2" />,
-                    ]}
                     extra={
                       <img
                         width={272}
@@ -99,6 +99,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    fetchPosts: () => dispatch(a.fetchPosts()),
   };
 }
 

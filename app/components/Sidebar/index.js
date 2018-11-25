@@ -20,7 +20,11 @@ function Sidebar() {
       <div className="logo">
         <img src={Logo} alt="Logo" />
       </div>
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+      <Menu theme="dark" mode="inline" defaultSelectedKeys={['0']}>
+        <Menu.Item key="0">
+          <Icon type="bars" />
+          <span className="nav-text">All</span>
+        </Menu.Item>
         <Menu.Item key="1">
           <Icon type="stock" />
           <span className="nav-text">Economy</span>

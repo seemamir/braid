@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Form, Icon, Input, Button, Row, Col } from 'antd';
+import { Form, Icon, Input, Button, Row, Col, Alert } from 'antd';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import makeSelectSignup from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import * as a from './actions';
 const FormItem = Form.Item;
 
 /* eslint-disable react/prefer-stateless-function */
@@ -18,9 +19,19 @@ export class Signup extends React.Component {
     this.props.history.push(`/`);
   };
 
+  handleSubmit = e => {
+    e.preventDefault();
+
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        this.props.createAccount(values);
+      }
+    });
+  };
+
   render() {
     const { getFieldDecorator } = this.props.form;
-
+    console.log(this.props.response)
     return (
       <div>
         <Helmet>
@@ -54,11 +65,11 @@ export class Signup extends React.Component {
                   )}
                 </FormItem>
                 <FormItem>
-                  {getFieldDecorator('password', {
+                  {getFieldDecorator('password1', {
                     rules: [
                       {
                         required: true,
-                        message: 'Please input your Password!',
+                        message: 'Please enter your Password!',
                       },
                     ],
                   })(
@@ -75,7 +86,7 @@ export class Signup extends React.Component {
                   )}
                 </FormItem>
                 <FormItem>
-                  {getFieldDecorator('confirm-password', {
+                  {getFieldDecorator('password2', {
                     rules: [
                       {
                         required: true,
@@ -95,8 +106,20 @@ export class Signup extends React.Component {
                     />,
                   )}
                 </FormItem>
+                {this.state.response &&
+                  this.state.response.status == 0 && (
+                    <Alert
+                      message={this.state.response.message}
+                      type="error"
+                      showIcon
+                    />
+                  )}
                 <FormItem>
-                  <Button type="primary" className="login-form-button">
+                  <Button
+                    type="primary"
+                    className="login-form-button"
+                    htmlType="submit"
+                  >
                     Register <Icon type="arrow-right" />
                   </Button>
 
@@ -131,6 +154,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    createAccount: payload => dispatch(a.createAccount(payload)),
   };
 }
 
