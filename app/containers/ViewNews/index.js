@@ -107,7 +107,6 @@ export class ViewNews extends React.Component {
 
   render() {
     const { post, comments } = this.props.viewNews;
-    console.log(comments);
     return (
       <div>
         <Helmet>
@@ -251,6 +250,12 @@ export class ViewNews extends React.Component {
             <Row>
               <Col span={16} offset={2}>
                 <h2 className="comment">Comments</h2>
+
+                <Row>
+                  <Col span={24}>
+                    {console.log(comments)}
+                  </Col>
+                </Row>
                 <Row>
                   <Col span={20}>
                     <textarea
