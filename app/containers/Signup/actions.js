@@ -20,6 +20,7 @@ export function createAccount(payload) {
 }
 
 export function setResponse(payload) {
+  console.log(payload)
   return {
     type: c.SET_RESPONSE,
     payload,

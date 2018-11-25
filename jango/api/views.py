@@ -5,28 +5,35 @@ from .serializers import PostSerializer,PostReactionSerializer, SavedPostSeriali
 from django.contrib.auth.models import User
 from rest_framework import status, viewsets
 from django.http import JsonResponse
+# import django_filters.rest_framework
+from django_filters.rest_framework import DjangoFilterBackend
 from django.contrib.auth.models import User
-import pprint
 # Create your views here.
 
 
 class PostViewSet(viewsets.ModelViewSet):
   queryset = Post.objects.all()
   serializer_class = PostSerializer
-
+  filter_backends = (DjangoFilterBackend,)
+  filter_fields = ('id','title')
 
 class PostReactionViewSet(viewsets.ModelViewSet):
   queryset = PostReaction.objects.all()
   serializer_class = PostReactionSerializer
-
-
+  filter_backends = (DjangoFilterBackend,)
+  filter_fields = ('post','user')
+  
 class SavedPostViewSet(viewsets.ModelViewSet):
   queryset = SavedPost.objects.all()
   serializer_class = SavedPostSerializer
+  filter_backends = (DjangoFilterBackend,)
+  filter_fields = ('id', 'user')
 
 class UserViewSet(viewsets.ModelViewSet):
   queryset = User.objects.all()
   serializer_class = UserSerializer
+  filter_backends = (DjangoFilterBackend,)
+  filter_fields = ('id','username','first_name','last_name','email')
   
 def Login(request):
   method = request.method
@@ -38,7 +45,6 @@ def Login(request):
 
 def Signup(request):
   method = request.method
-  # pprint(request)
   if (method == 'POST'):
     # try:
       user = User.objects.create(

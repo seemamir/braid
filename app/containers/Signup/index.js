@@ -31,7 +31,6 @@ export class Signup extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    console.log(this.props.response)
     return (
       <div>
         <Helmet>
