@@ -4,6 +4,8 @@ build
 node_modules
 stats.json
 .history
+jango/api/__pycache__
+jango/jango/__pycache__
 
 # Cruft
 .DS_Store
