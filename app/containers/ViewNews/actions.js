@@ -40,6 +40,13 @@ export function setPost(payload) {
   };
 }
 
+export function setPostComments(payload) {
+  return {
+    type: c.SET_POST_COMMENTS,
+    payload,
+  };
+}
+
 export function updatePost(payload) {
   return {
     type: c.UPDATE_POST,
