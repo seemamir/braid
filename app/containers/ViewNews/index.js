@@ -72,6 +72,7 @@ export class ViewNews extends React.Component {
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.viewPost(id);
+    this.props.fetchPostComments(id);
   }
 
   handleRedirect = () => {
@@ -295,6 +296,7 @@ function mapDispatchToProps(dispatch) {
     viewPost: id => dispatch(a.viewPost(id)),
     comment: data => dispatch(a.comment(data)),
     update: (id, payload) => dispatch(a.updatePost(id, payload)),
+    fetchPostComments: (id) => dispatch(a.fetchPostComments(id)),
   };
 }
 

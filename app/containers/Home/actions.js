@@ -16,7 +16,7 @@ export function fetchPosts(payload) {
   console.log(payload);
   return {
     type: c.FETCH_POSTS,
-    payload
+    payload,
   };
 }
 
