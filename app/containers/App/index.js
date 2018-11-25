@@ -31,7 +31,8 @@ import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import GlobalStyle from '../../global-styles';
 
 export function App() {
-  return (  
+
+  return (
     <div>
       <Switch>
         <Route path="/login" component={Login} />
