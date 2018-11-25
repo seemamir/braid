@@ -28,15 +28,15 @@ export default function App() {
   return (
     <div>
       <Switch>
-        <Route exact path="/" component={Login} />
-        <Route exact path="/home" component={Home} />
-        <Route exact path="/news-page" component={NewsPage} />
-        <Route exact path="/view/:id" component={ViewNews} />
-        <Route exact path="/add-news" component={AddNews} />
-        <Route exact path="/signup" component={Signup} />
-        <Route exact path="/reset-password" component={ResetPassword} />
-        <Route exact path="/forget-password" component={ForgetPassword} />
-        <Route exact path="/social-login-done" component={SocialLoginDone} />
+        <Route path="/login" component={Login} />
+        <Route path="/news-page" component={NewsPage} />
+        <Route path="/view/:id" component={ViewNews} />
+        <Route path="/add-news" component={AddNews} />
+        <Route path="/signup" component={Signup} />
+        <Route path="/reset-password" component={ResetPassword} />
+        <Route path="/forget-password" component={ForgetPassword} />
+        <Route path="/social-login-done" component={SocialLoginDone} />
+        <Route exact path="/" component={Home} />
         <Route component={NotFoundPage} />
       </Switch>
       <Footer />

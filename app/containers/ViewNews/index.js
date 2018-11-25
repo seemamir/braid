@@ -14,7 +14,7 @@ import { compose } from 'redux';
 import injectSaga from 'utils/injectSaga';
 import { get } from 'lodash';
 import injectReducer from 'utils/injectReducer';
-import { Row, Col, Icon, Button } from 'antd';
+import { Row, Col, Icon, Button, Form } from 'antd';
 import styled from 'styled-components';
 import makeSelectViewNews from './selectors';
 import reducer from './reducer';
@@ -30,13 +30,23 @@ const Wrapper = styled.div`
   h3 {
     color: #555;
   }
+  p {
+    margin: auto 20px;
+  }
   .main-sentence {
     margin: 50px auto;
+  }
+  .save-btn {
+    margin-top: 50px;
+    margin-right: 10px;
+  }
+  .comment {
+    margin-top: 50px;
   }
 `;
 const Sidebar = styled.div`
   border-left: 1px solid #eee;
-  height: 500px;
+  height: 600px;
   margin-left: 50px;
   i {
     margin-bottom: 5px;
@@ -49,8 +59,13 @@ const Sidebar = styled.div`
 export class ViewNews extends React.Component {
   constructor(props) {
     super(props);
+    const { post } = props.viewNews;
     this.state = {
       commentField: '',
+      sentence2: post ? post.sentence2 : '',
+      sentence3: post ? post.sentence3 : '',
+      sentence4: post ? post.sentence4 : '',
+      main_sentence: post ? post.main_sentence : '',
     };
   }
 
@@ -77,6 +92,20 @@ export class ViewNews extends React.Component {
     }
   };
 
+  handleChange = e => {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value,
+    });
+  };
+
+  handleSave = () => {
+    const { id } = this.props.match.params;
+    delete this.state["commentField"];
+
+    this.props.update(id, ...this.state);
+  };
+
   render() {
     const { post } = this.props.viewNews;
     return (
@@ -100,53 +129,65 @@ export class ViewNews extends React.Component {
             <Row>
               <Col span={16}>
                 <h2 className="main-heading">Summary</h2>
-                <Row>
-                  <Col span={12}>
-                    <p>{post.sentence2}</p>
-                  </Col>
-                  <Col span={12}>
-                    <p>{post.sentence3}</p>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col span={12} offset={6}>
-                    <div className="main-sentence">
-                      <h2>Main Sentence</h2>
-                      <p>{post.main_sentence}</p>
-                    </div>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col span={12} offset={6}>
-                    <p>{post.sentence4}</p>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col span={20} offset={2}>
-                    <h2>Comments</h2>
-                    <Row>
-                      <Col span={20}>
+                <Form onChange={this.handleChange}>
+                  <Row>
+                    <Col span={1} />
+                    <Col span={10}>
+                      <textarea
+                        name="sentence2"
+                        rows="4"
+                        defaultValue={this.state.sentence2}
+                      />
+                    </Col>
+                    <Col span={2} />
+                    <Col span={10}>
+                      <textarea
+                        name="sentence3"
+                        rows="4"
+                        defaultValue={this.state.sentence3}
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col span={12} offset={6}>
+                      <div className="main-sentence">
+                        <h2>Main Sentence</h2>
                         <textarea
-                          name="comment"
-                          rows="3"
-                          onChange={e =>
-                            this.setState({ commentField: e.target.value })
-                          }
-                          placeholder="Write ur comment here"
+                          name="main_sentence"
+                          rows="4"
+                          defaultValue={this.state.main_sentence}
                         />
-                        {this.state.commentField}
-                      </Col>
-                      <Col span={4}>
-                        <Button
-                          onClick={() => this.publishComment()}
-                          type="primary"
-                        >
-                          Publish
-                        </Button>
-                      </Col>
-                    </Row>
-                  </Col>
-                </Row>
+                      </div>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col span={12} offset={6}>
+                      <textarea
+                        name="sentence4"
+                        rows="4"
+                        defaultValue={this.state.sentence4}
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col span={24}>
+                      <Button
+                        type="primary"
+                        className="save-btn"
+                        onClick={this.handleSave}
+                      >
+                        Save
+                      </Button>
+                      <Button
+                        type="primary"
+                        className="save-btn"
+                        onClick={this.handleRedirect}
+                      >
+                        Go to saved Page
+                      </Button>
+                    </Col>
+                  </Row>
+                </Form>
               </Col>
               <Col span={8}>
                 <Sidebar>
@@ -207,6 +248,32 @@ export class ViewNews extends React.Component {
                 </Sidebar>
               </Col>
             </Row>
+            <Row>
+              <Col span={16} offset={2}>
+                <h2 className="comment">Comments</h2>
+                <Row>
+                  <Col span={20}>
+                    <textarea
+                      name="comment"
+                      rows="3"
+                      onChange={e =>
+                        this.setState({ commentField: e.target.value })
+                      }
+                      placeholder="Write ur comment here"
+                    />
+                    {this.state.commentField}
+                  </Col>
+                  <Col span={4}>
+                    <Button
+                      onClick={() => this.publishComment()}
+                      type="primary"
+                    >
+                      Publish
+                    </Button>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
           </div>
         </Wrapper>
       </div>
@@ -227,6 +294,7 @@ function mapDispatchToProps(dispatch) {
     dispatch,
     viewPost: id => dispatch(a.viewPost(id)),
     comment: data => dispatch(a.comment(data)),
+    update: (id, payload) => dispatch(a.updatePost(id, payload)),
   };
 }
 
