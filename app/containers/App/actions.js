@@ -6,3 +6,9 @@ export function loggedInAction(user) {
     payload: user,
   };
 }
+export function setEmail(payload) {
+  return {
+    type: c.SET_EMAIL,
+    payload,
+  };
+}
