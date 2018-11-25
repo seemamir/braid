@@ -39,6 +39,7 @@ export class Login extends React.Component {
       const { response } = this.props.login;
     
       if (response && response.status && response.status === 200) {
+        localStorage.setItem('email',a.email)
         this.props.history.push('/home');
       }
     }, 1000);
@@ -52,12 +53,16 @@ export class Login extends React.Component {
      
       if (!err) {
         this.props.loginAction({username: values.email, ...values});
+       
       }
     });
     setTimeout(() => {
       const { response } = this.props.login;
       if (response && response.status && response.status === 200) {
-        this.props.history.push('/home');
+        this.props.form.validateFields((err, values) => {
+          localStorage.setItem('email',values.email)
+          this.props.history.push('/home');
+        })
       }
     }, 1000);
   };

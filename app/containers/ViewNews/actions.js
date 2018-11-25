@@ -17,6 +17,14 @@ export function viewPost(id) {
     id,
   };
 }
+
+export function comment(payload) {
+  return {
+    type: c.COMMENT_ON_POST,
+    payload
+  }
+}
+
 export function setPost(payload) {
   return {
     type: c.SET_POST,

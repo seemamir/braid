@@ -6,7 +6,7 @@ import { createAccountApi } from "../Signup/api"
 export function* login(action) {
   try {
     const { payload } = action;
-    
+    console.log(payload);
     const response = yield call(api.loginApi, payload);
     yield put(
       a.setResponse({ message: response.data, status: response.status }),

@@ -11,6 +11,15 @@ export function* view(action) {
     yield put(a.setPost(error.response.data));
   }
 }
+
+export function* comment(action) {
+  try {
+    const response = yield call(api.comment(action.data))
+    console.log(response);
+  } catch (e) {
+    console.log(e.message);
+  }
+}
 // Individual exports for testing
 export default function* viewNewsSaga() {
   // See example in containers/HomePage/saga.js

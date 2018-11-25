@@ -43,3 +43,11 @@ class SavedPost(models.Model):
 
   def __str__(self):
     return "Saved post"
+
+class Comment(models.Model):
+  post = models.ForeignKey('api.Post',on_delete=models.CASCADE)
+  user = models.ForeignKey(User, on_delete=models.CASCADE)
+  comment = models.TextField()
+
+  def __str__(self):
+    return "Saved post"
