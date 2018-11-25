@@ -62,10 +62,10 @@ export class ViewNews extends React.Component {
     const { post } = props.viewNews;
     this.state = {
       commentField: '',
-      sentence2: post ? post.sentence2 : '',
-      sentence3: post ? post.sentence3 : '',
-      sentence4: post ? post.sentence4 : '',
-      main_sentence: post ? post.main_sentence : '',
+      sentence2: post.sentence2 ? post.sentence2 : '',
+      sentence3: post.sentence3 ? post.sentence3 : '',
+      sentence4: post.sentence4 ? post.sentence4 : '',
+      main_sentence: post.main_sentence ? post.main_sentence : '',
     };
   }
 
@@ -102,13 +102,12 @@ export class ViewNews extends React.Component {
 
   handleSave = () => {
     const { id } = this.props.match.params;
-
-
     this.props.update(id, ...this.state);
   };
 
   render() {
-    const { post } = this.props.viewNews;
+    const { post, comments } = this.props.viewNews;
+    console.log(comments);
     return (
       <div>
         <Helmet>
@@ -296,7 +295,7 @@ function mapDispatchToProps(dispatch) {
     viewPost: id => dispatch(a.viewPost(id)),
     comment: data => dispatch(a.comment(data)),
     update: (id, payload) => dispatch(a.updatePost(id, payload)),
-    fetchPostComments: (id) => dispatch(a.fetchPostComments(id)),
+    fetchPostComments: id => dispatch(a.fetchPostComments(id)),
   };
 }
 
