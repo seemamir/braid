@@ -11,6 +11,7 @@ export function defaultAction() {
     type: c.DEFAULT_ACTION,
   };
 }
+
 export function viewPost(id) {
   return {
     type: c.VIEW_POST,
