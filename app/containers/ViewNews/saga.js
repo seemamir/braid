@@ -14,14 +14,15 @@ export function* view(action) {
 
 export function* comment(action) {
   try {
-    const response = yield call(api.comment(action.data))
+    const response = yield call(api.comment(action.data));
     console.log(response);
   } catch (e) {
-    console.log(e.message);
+    console.log(e.response);
   }
 }
 // Individual exports for testing
 export default function* viewNewsSaga() {
   // See example in containers/HomePage/saga.js
   yield takeLatest(c.VIEW_POST, view);
+  yield takeLatest(c.COMMENT_ON_POST, comment);
 }

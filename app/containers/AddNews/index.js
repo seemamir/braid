@@ -39,7 +39,7 @@ export class AddNews extends React.Component {
       a.setState({
         [attribute]: reader.result,
       });
-      console.log(a.state,attribute);
+      console.log(a.state, attribute);
     };
     reader.onerror = function(error) {
       console.log('Error: ', error);
@@ -116,7 +116,9 @@ export class AddNews extends React.Component {
                         />
                         <Button
                           onClick={() =>
-                            document.querySelector('.one-upload-thumbnail').click()
+                            document
+                              .querySelector('.one-upload-thumbnail')
+                              .click()
                           }
                         >
                           Upload

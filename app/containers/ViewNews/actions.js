@@ -11,7 +11,6 @@ export function defaultAction() {
     type: c.DEFAULT_ACTION,
   };
 }
-
 export function viewPost(id) {
   return {
     type: c.VIEW_POST,
@@ -22,8 +21,8 @@ export function viewPost(id) {
 export function comment(payload) {
   return {
     type: c.COMMENT_ON_POST,
-    payload
-  }
+    payload,
+  };
 }
 
 export function setPost(payload) {

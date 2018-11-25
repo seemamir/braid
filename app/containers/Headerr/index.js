@@ -21,10 +21,8 @@ const { Header } = Layout;
 
 /* eslint-disable react/prefer-stateless-function */
 export class Headerr extends React.Component {
-  handleRedirect = () => {
-    return <Redirect to="/news-page" />;
-    // this.props.history.push('/add-news');
-  };
+  handleRedirect = () => <Redirect to="/news-page" />;
+  // this.props.history.push('/add-news');
 
   render() {
     return (
