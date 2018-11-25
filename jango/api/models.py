@@ -11,6 +11,7 @@ REACTION_CHOICES = (
 # Create your models here.
 class Post(models.Model):
   title = models.CharField(max_length=250)
+  user = models.ForeignKey(User,on_delete=models.CASCADE)
   author = models.CharField(max_length=250)
   category = models.CharField(max_length=250)
   source = models.CharField(max_length=250)
@@ -23,6 +24,7 @@ class Post(models.Model):
   people2 = models.TextField(blank=True)
   people3 = models.TextField(blank=True)
   people4 = models.TextField(blank=True)
+  
   embedded_image = models.TextField(blank=True)
   thumbnail_image = models.TextField(blank=True)
 
