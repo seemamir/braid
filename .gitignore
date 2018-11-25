@@ -6,6 +6,7 @@ stats.json
 .history
 jango/api/__pycache__
 jango/jango/__pycache__
+jango/db.sqlite3
 
 # Cruft
 .DS_Store
