@@ -14,7 +14,7 @@ export function* view(action) {
 
 export function* comment(action) {
   try {
-    const response = yield call(api.comment(action.data));
+    const response = yield call(api.comment(action.payload));
     console.log(response);
   } catch (e) {
     console.log(e.response);

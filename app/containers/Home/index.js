@@ -22,9 +22,9 @@ export class Home extends React.Component {
     this.props.fetchUser();
   }
 
-  filter = (category) => {
-    this.props.fetchPosts(category)
-  }
+  filter = category => {
+    this.props.fetchPosts(category);
+  };
 
   viewPost = id => {
     this.props.history.push(`/view/${id}`);
@@ -46,14 +46,56 @@ export class Home extends React.Component {
           <Layout style={{ marginLeft: '200px' }}>
             <Header />
             <Content className="content">
-              <div className='filters' >
-                <Button onClick={ () => this.filter('') } style={{marginRight: '10px',marginBottom: '20px'}} size="small">All</Button>
-                <Button onClick={ () => this.filter('Economy') } style={{marginRight: '10px',marginBottom: '20px'}} size="small">Economy</Button>
-                <Button onClick={ () => this.filter('Politics') } style={{marginRight: '10px',marginBottom: '20px'}} size="small">Politics</Button>
-                <Button onClick={ () => this.filter('Tech') } style={{marginRight: '10px',marginBottom: '20px'}} size="small">Tech</Button>
-                <Button onClick={ () => this.filter('Life') } style={{marginRight: '10px',marginBottom: '20px'}} size="small">Life</Button>
-                <Button onClick={ () => this.filter('Entertainment') } style={{marginRight: '10px',marginBottom: '20px'}} size="small">Entertainment</Button>
-                <Button onClick={ () => this.filter('Opinion') } style={{marginRight: '10px',marginBottom: '20px'}} size="small">Opinion</Button>
+              <div className="filters">
+                <Button
+                  onClick={() => this.filter('')}
+                  style={{ marginRight: '10px', marginBottom: '20px' }}
+                  size="small"
+                >
+                  All
+                </Button>
+                <Button
+                  onClick={() => this.filter('Economy')}
+                  style={{ marginRight: '10px', marginBottom: '20px' }}
+                  size="small"
+                >
+                  Economy
+                </Button>
+                <Button
+                  onClick={() => this.filter('Politics')}
+                  style={{ marginRight: '10px', marginBottom: '20px' }}
+                  size="small"
+                >
+                  Politics
+                </Button>
+                <Button
+                  onClick={() => this.filter('Tech')}
+                  style={{ marginRight: '10px', marginBottom: '20px' }}
+                  size="small"
+                >
+                  Tech
+                </Button>
+                <Button
+                  onClick={() => this.filter('Life')}
+                  style={{ marginRight: '10px', marginBottom: '20px' }}
+                  size="small"
+                >
+                  Life
+                </Button>
+                <Button
+                  onClick={() => this.filter('Entertainment')}
+                  style={{ marginRight: '10px', marginBottom: '20px' }}
+                  size="small"
+                >
+                  Entertainment
+                </Button>
+                <Button
+                  onClick={() => this.filter('Opinion')}
+                  style={{ marginRight: '10px', marginBottom: '20px' }}
+                  size="small"
+                >
+                  Opinion
+                </Button>
               </div>
               <Button onClick={this.handleRedirect} type="primary">
                 Add new post
