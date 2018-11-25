@@ -11,6 +11,7 @@ export const initialState = fromJS({
   loading: false,
   posts: [],
   response: {},
+  user: {},
 });
 
 function homeReducer(state = initialState, action) {
@@ -23,6 +24,8 @@ function homeReducer(state = initialState, action) {
       return state.set('posts', action.payload);
     case c.SET_RESPONSE:
       return state.set('response', action.payload);
+    case c.USER_INFO:
+      return state.set('user', action.payload);
     default:
       return state;
   }
