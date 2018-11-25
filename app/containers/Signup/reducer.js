@@ -17,6 +17,8 @@ function signupReducer(state = initialState, action) {
       return state;
     case c.SET_RESPONSE:
       return state.set('response', action.payload);
+    case c.RESET_RESPONSE:
+      return state.set('response', {});
     default:
       return state;
   }

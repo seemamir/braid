@@ -37,6 +37,9 @@ const GlobalStyle = createGlobalStyle`
   p { 
     color: #999
   }
+  .ant-alert{
+    margin-bottom: 30px;
+  }
   .content{
     margin: 24px 16px;
     padding: 24px;

@@ -1,4 +1,4 @@
-import { takeLatest, call, put } from 'redux-saga/effects';
+import { takeLatest, call, cancel, take, put } from 'redux-saga/effects';
 import * as c from './constants';
 import * as a from './actions';
 import * as api from './api';
@@ -38,9 +38,12 @@ export function* update(action) {
 // Individual exports for testing
 export default function* viewNewsSaga() {
   // See example in containers/HomePage/saga.js
-  yield takeLatest(c.VIEW_POST, view);
+  const view_p = yield takeLatest(c.VIEW_POST, view);
   yield takeLatest(c.COMMENT_ON_POST, comment);
   yield takeLatest(c.FETCH_POST_COMMENTS, fetchComments);
   yield takeLatest(c.UPDATE_POST, update);
   yield takeLatest(c.UPDATE_POST, update);
+
+  yield take(c.UNMOUNT_REDUX);
+  yield cancel(view_p);
 }

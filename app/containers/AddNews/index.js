@@ -39,11 +39,8 @@ export class AddNews extends React.Component {
       a.setState({
         [attribute]: reader.result,
       });
-      console.log(a.state, attribute);
     };
-    reader.onerror = function(error) {
-      console.log('Error: ', error);
-    };
+    reader.onerror = function(error) {};
   };
 
   handleFileUpload(e, attribute) {
@@ -56,7 +53,7 @@ export class AddNews extends React.Component {
     this.props.form.validateFields((err, values) => {
       values.embedded_image = this.state.embedded_image;
       values.thumbnail_image = this.state.thumbnail_image;
-      console.log(values);
+      values.user = 1;
       if (!err) {
         this.props.addPost(values);
       }

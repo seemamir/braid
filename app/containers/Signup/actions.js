@@ -25,3 +25,8 @@ export function setResponse(payload) {
     payload,
   };
 }
+export function resetResponse() {
+  return {
+    type: c.RESET_RESPONSE,
+  };
+}
