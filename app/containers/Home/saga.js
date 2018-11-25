@@ -6,7 +6,6 @@ import makeSelectNewsPage from '../Login/selectors';
 
 export function* index(action) {
   try {
-    console.log(action.payload);
     const response = yield call(api.fetchPosts,action.payload);
     yield put(a.setPosts(response.data));
   } catch (error) {
@@ -18,7 +17,6 @@ export function* fetchUser() {
   try {
     const { email } = yield select(makeSelectNewsPage());
     const response = yield call(api.fetchUser,email);
-    console.log(response); // here is the user is get now please use response to save the user.
   } catch (error) {}
 }
 // Individual exports for testing
