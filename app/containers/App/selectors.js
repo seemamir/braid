@@ -39,7 +39,7 @@ export {
   selectGlobal,
   makeSelectEmail,
   makeSelectRepos,
-  makeSelectLocation,
+  // makeSelectLocation,
   isLogin,
   // loggedInInfo,
 };

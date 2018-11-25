@@ -3,15 +3,13 @@ import { loadState, clearState } from '../../utils/persistState';
 
 import * as c from './constants';
 
-const user = loadState();
+// const user = loadState();
 
 // The initial state of the App
 const initialState = fromJS({
   loggedInInfo: {},
   email: {},
 });
-
-
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
