@@ -7,8 +7,17 @@ export function* create(action) {
   try {
     const { payload } = action;
     const response = yield call(api.addPost, payload);
-    console.log(response);
-  } catch (error) {}
+    yield put(
+      a.setResponse({ message: response.data, status: response.status }),
+    );
+  } catch (error) {
+    yield put(
+      a.setResponse({
+        message: error.response.data,
+        status: error.response.status,
+      }),
+    );
+  }
 }
 // Individual exports for testing
 export default function* addNewsSaga() {

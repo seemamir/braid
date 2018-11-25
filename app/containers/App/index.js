@@ -31,7 +31,7 @@ export default function App() {
         <Route exact path="/" component={Login} />
         <Route exact path="/home" component={Home} />
         <Route exact path="/news-page" component={NewsPage} />
-        <Route exact path="/view" component={ViewNews} />
+        <Route exact path="/view/:id" component={ViewNews} />
         <Route exact path="/add-news" component={AddNews} />
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/reset-password" component={ResetPassword} />

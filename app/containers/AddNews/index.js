@@ -23,14 +23,50 @@ const { TextArea } = Input;
 const { Option } = Select;
 /* eslint-disable react/prefer-stateless-function */
 export class AddNews extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      thumbnail_image: '',
+      embedded_image: '',
+    };
+  }
+
+  getBase64 = (file, attribute) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    const a = this;
+    reader.onload = function() {
+      a.setState({
+        [attribute]: reader.result,
+      });
+      console.log(a.state,attribute);
+    };
+    reader.onerror = function(error) {
+      console.log('Error: ', error);
+    };
+  };
+
+  handleFileUpload(e, attribute) {
+    e.persist();
+    this.getBase64(e.target.files[0], attribute);
+  }
+
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
+      values.embedded_image = this.state.embedded_image;
+      values.thumbnail_image = this.state.thumbnail_image;
       console.log(values);
       if (!err) {
         this.props.addPost(values);
       }
     });
+    setTimeout(() => {
+      const { response } = this.props.addNews;
+      if (response && response.status && response.status === 201) {
+        this.props.history.push(`/view/${response.message.id}`);
+      }
+    }, 1000);
   };
 
   render() {
@@ -69,9 +105,23 @@ export class AddNews extends React.Component {
                   </FormItem>
                   <FormItem label="Thumbnail image" {...formItemLayout}>
                     {getFieldDecorator('thumbnail_image', {})(
-                      <Upload name="thumbnail_image" listType="picture">
-                        <Button htmlType="button">Upload a file</Button>
-                      </Upload>,
+                      <div>
+                        <input
+                          style={{ display: 'none' }}
+                          className="one-upload-thumbnail"
+                          onChange={e =>
+                            this.handleFileUpload(e, 'thumbnail_image')
+                          }
+                          type="file"
+                        />
+                        <Button
+                          onClick={() =>
+                            document.querySelector('.one-upload-thumbnail').click()
+                          }
+                        >
+                          Upload
+                        </Button>
+                      </div>,
                     )}
                   </FormItem>
                   <FormItem {...formItemLayout} label="Category" hasFeedback>
@@ -230,9 +280,23 @@ export class AddNews extends React.Component {
                   </FormItem>
                   <FormItem label="Embedded image" {...formItemLayout}>
                     {getFieldDecorator('embedded_image', {})(
-                      <Upload name="embedded_image" listType="picture">
-                        <Button>Upload a file</Button>
-                      </Upload>,
+                      <div>
+                        <input
+                          style={{ display: 'none' }}
+                          className="one-upload"
+                          onChange={e =>
+                            this.handleFileUpload(e, 'embedded_image')
+                          }
+                          type="file"
+                        />
+                        <Button
+                          onClick={() =>
+                            document.querySelector('.one-upload').click()
+                          }
+                        >
+                          Upload
+                        </Button>
+                      </div>,
                     )}
                   </FormItem>
                   <FormItem>
