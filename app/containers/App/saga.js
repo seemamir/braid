@@ -2,17 +2,6 @@ import { takeLatest, call, put, select } from 'redux-saga/effects';
 import * as c from './constants';
 import * as a from './actions';
 
-export function* index(action) {
-  try {
-    console.log(action.payload);
-    const response = yield call(api.fetchPosts(action.payload));
-    console.log(response);
-    yield put(a.setPosts(response.data));
-  } catch (error) {
-    yield put(a.setResponse(error.response));
-  }
-}
-
 export function* fetchUser() {
   try {
     const { email } = yield select(makeSelectNewsPage());

@@ -97,16 +97,14 @@ export class Home extends React.Component {
                   Opinion
                 </Button>
               </div>
-              <Button onClick={this.handleRedirect} type="primary">
-                Add new post
-              </Button>
+
               <List
                 itemLayout="vertical"
                 size="large"
                 pagination={{
                   pageSize: 3,
                 }}
-                dataSource={this.props.home.news}
+                dataSource={this.props.home.posts}
                 renderItem={item => (
                   <List.Item
                     onClick={() => this.viewPost(item.id)}
@@ -128,6 +126,9 @@ export class Home extends React.Component {
                   </List.Item>
                 )}
               />
+              <Button onClick={this.handleRedirect} type="primary">
+                Add new post
+              </Button>
             </Content>
           </Layout>
         </Layout>

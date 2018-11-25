@@ -19,7 +19,6 @@ function appReducer(state = initialState, action) {
   switch (action.type) {
     case c.LOGGED_IN_USER:
       return state.set('loggedInInfo', action.payload);
-
     case c.LOGOUT_USER:
       clearState();
       return state.set('loggedInInfo', null);
