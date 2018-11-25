@@ -69,8 +69,8 @@ export class AddNews extends React.Component {
                       </Upload>,
                     )}
                   </FormItem>
-                  <FormItem {...formItemLayout} label="Select" hasFeedback>
-                    {getFieldDecorator('Category', {
+                  <FormItem {...formItemLayout} label="Category" hasFeedback>
+                    {getFieldDecorator('category', {
                       rules: [
                         {
                           required: true,
@@ -129,74 +129,124 @@ export class AddNews extends React.Component {
                       ],
                     })(<Input type="text" placeholder="Please enter source" />)}
                   </FormItem>
-                  <FormItem label="Sentence" {...formItemLayout}>
+                  <FormItem label="Main Sentence" {...formItemLayout}>
                     {getFieldDecorator('main-sentence', {
-                      rules: [
-                        {
-                          type: 'text',
-                        },
-                      ],
-                    })(
-                      <TextArea
-                        type="text"
-                        placeholder="Please write something here"
-                        autoSize={{ minRows: 5 }}
-                      />,
-                    )}
-                  </FormItem>
-                  <FormItem label="Sentence" {...formItemLayout}>
-                    {getFieldDecorator('second-sentence', {
-                      rules: [
-                        {
-                          type: 'text',
-                        },
-                      ],
-                    })(
-                      <TextArea
-                        type="text"
-                        placeholder="Please write something here"
-                        autoSize={{ minRows: 5 }}
-                      />,
-                    )}
-                  </FormItem>
-                  <FormItem label="Sentence" {...formItemLayout}>
-                    {getFieldDecorator('third-sentence', {
-                      rules: [
-                        {
-                          type: 'text',
-                        },
-                      ],
-                    })(
-                      <TextArea
-                        type="text"
-                        placeholder="Please write something here"
-                        autoSize={{ minRows: 5 }}
-                      />,
-                    )}
-                  </FormItem>
-                  <FormItem label="sentence" {...formItemLayout}>
-                    {getFieldDecorator('fourth-sentence', {
-                      rules: [
-                        {
-                          type: 'text',
-                        },
-                      ],
-                    })(
-                      <TextArea
-                        type="text"
-                        placeholder="Please write something here"
-                        autoSize={{ minRows: 5 }}
-                      />,
-                    )}
-                  </FormItem>
-                  <FormItem label="People" {...formItemLayout}>
-                    {getFieldDecorator('people', {
                       rules: [
                         {
                           type: 'text',
                         },
                         {
                           required: true,
+                        },
+                      ],
+                    })(
+                      <TextArea
+                        type="text"
+                        placeholder="Please write something here"
+                      />,
+                    )}
+                  </FormItem>
+                  <FormItem label="Sentence" {...formItemLayout}>
+                    {getFieldDecorator('sentence2', {
+                      rules: [
+                        {
+                          type: 'text',
+                        },
+                      ],
+                    })(
+                      <TextArea
+                        type="text"
+                        placeholder="Please write something here"
+                      />,
+                    )}
+                  </FormItem>
+                  <FormItem label="Sentence" {...formItemLayout}>
+                    {getFieldDecorator('sentence3', {
+                      rules: [
+                        {
+                          type: 'text',
+                        },
+                      ],
+                    })(
+                      <TextArea
+                        type="text"
+                        placeholder="Please write something here"
+                      />,
+                    )}
+                  </FormItem>
+                  <FormItem label="Sentence" {...formItemLayout}>
+                    {getFieldDecorator('sentence4', {
+                      rules: [
+                        {
+                          type: 'text',
+                        },
+                      ],
+                    })(
+                      <TextArea
+                        type="text"
+                        placeholder="Please write something here"
+                      />,
+                    )}
+                  </FormItem>
+                  <FormItem label="People" {...formItemLayout}>
+                    {getFieldDecorator('people1', {
+                      rules: [
+                        {
+                          type: 'text',
+                        },
+                        {
+                          required: true,
+                          message: 'Please enter name here',
+                        },
+                      ],
+                    })(
+                      <Input
+                        type="text"
+                        placeholder="Please enter name here"
+                      />,
+                    )}
+                  </FormItem>
+                  <FormItem label="People" {...formItemLayout}>
+                    {getFieldDecorator('people2', {
+                      rules: [
+                        {
+                          type: 'text',
+                        },
+                        {
+                          message: 'Please enter name here',
+                        },
+                      ],
+                    })(
+                      <Input
+                        type="text"
+                        placeholder="Please enter name here"
+                      />,
+                    )}
+                  </FormItem>
+                  <FormItem label="People" {...formItemLayout}>
+                    {getFieldDecorator('people3', {
+                      rules: [
+                        {
+                          type: 'text',
+                        },
+                        {
+                          message: 'Please enter name here',
+                        },
+                      ],
+                    })(
+                      <Input
+                        type="text"
+                        placeholder="Please enter name here"
+                      />,
+                    )}
+                  </FormItem>
+                  <FormItem label="People" {...formItemLayout}>
+                    {getFieldDecorator('people4', {
+                      rules: [
+                        {
+                          type: 'text',
+                        },
+                        {
                           message: 'Please enter name here',
                         },
                       ],
@@ -218,10 +268,10 @@ export class AddNews extends React.Component {
                       </Upload>,
                     )}
                   </FormItem>
+                  <FormItem>
+                    <Button type="primary">Publish</Button>
+                  </FormItem>
                 </Form>
-              </Col>
-              <Col span={14} offset={5}>
-                <Button type="primary">Publish</Button>
               </Col>
             </Row>
           </div>

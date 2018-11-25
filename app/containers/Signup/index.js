@@ -106,14 +106,14 @@ export class Signup extends React.Component {
                     />,
                   )}
                 </FormItem>
-                {this.state.response &&
-                  this.state.response.status == 0 && (
+                {/* {this.props.response &&
+                  this.props.response.status == 0 && (
                     <Alert
-                      message={this.state.response.message}
+                      message={this.props.response}
                       type="error"
                       showIcon
                     />
-                  )}
+                  )} */}
                 <FormItem>
                   <Button
                     type="primary"
