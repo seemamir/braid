@@ -14,7 +14,7 @@ export function* view(action) {
 
 export function* comment(action) {
   try {
-    const response = yield call(api.comment(action.payload));
+    const response = yield call(api.comment,action.payload);
     console.log(response);
   } catch (e) {
     console.log(e.response);
@@ -23,8 +23,11 @@ export function* comment(action) {
 
 export function* fetchComments(action) {
   try {
-    const response = yield call(api.comments(action.payload));
-    console.log(response);
+    console.log(action);
+    const response = yield call(api.comments,action.payload);
+    console.log(a);
+    // yield put(a.setPostComments(response.data));
+    // yield put(a.)
   } catch (e) {
     console.log(e);
   }
