@@ -16,7 +16,7 @@ import injectReducer from 'utils/injectReducer';
 import makeSelectAddNews from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import Header from '../../components/Navbar';
+import Header from '../Headerr/Loadable';
 import * as a from './actions';
 const FormItem = Form.Item;
 const { TextArea } = Input;

@@ -18,7 +18,7 @@ import styled from 'styled-components';
 import makeSelectViewNews from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import Header from '../../components/Navbar/Loadable';
+import Header from '../Headerr/Loadable';
 import * as a from './actions';
 const Wrapper = styled.div`
   margin: 20px auto;
@@ -50,6 +50,10 @@ export class ViewNews extends React.Component {
     const { id } = this.props.match.params;
     this.props.viewPost(id);
   }
+
+  handleRedirect = () => {
+    this.props.history.push('/news-page');
+  };
 
   render() {
     const { post } = this.props.viewNews;
