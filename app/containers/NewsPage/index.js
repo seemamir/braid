@@ -9,6 +9,7 @@ import injectReducer from 'utils/injectReducer';
 import makeSelectNewsPage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import Header from '../Headerr/Loadable';
 const { Meta } = Card;
 /* eslint-disable react/prefer-stateless-function */
 export class NewsPage extends React.Component {
@@ -63,6 +64,7 @@ export class NewsPage extends React.Component {
           <title>NewsPage</title>
           <meta name="description" content="Description of NewsPage" />
         </Helmet>
+        <Header />
         <div className="container">
           <Row>
             <Col span={6}>

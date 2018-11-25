@@ -1,18 +1,14 @@
 import { fromJS } from 'immutable';
-import {
-  loadPatientState,
-  loadState,
-  clearState,
-} from '../../utils/persistState';
+import { loadState, clearState } from '../../utils/persistState';
 
 import * as c from './constants';
 
 const user = loadState();
-const patient = loadPatientState();
 
 // The initial state of the App
 const initialState = fromJS({
   loggedInInfo: user,
+  currentUser: {},
 });
 
 function appReducer(state = initialState, action) {

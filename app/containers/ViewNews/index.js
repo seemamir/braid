@@ -60,6 +60,7 @@ export class ViewNews extends React.Component {
   constructor(props) {
     super(props);
     const { post } = props.viewNews;
+    console.log(post);
     this.state = {
       commentField: '',
       sentence2: post.sentence2 ? post.sentence2 : '',
