@@ -16,21 +16,15 @@ import Home from 'containers/Home/Loadable';
 import Footer from 'components/Footer/Loadable';
 import NewsPage from 'containers/NewsPage/Loadable';
 import ViewNews from 'containers/ViewNews/Loadable';
-
-import { createStructuredSelector } from 'reselect';
 import AddNews from 'containers/AddNews/Loadable';
 import ResetPassword from 'containers/ResetPassword/Loadable';
 import SocialLoginDone from 'containers/SocialLoginDone/Loadable';
-import { compose } from 'redux';
-import { selectGlobal} from "./selectors";
 import ForgetPassword from 'containers/ForgetPassword/Loadable';
-
-import { connect } from 'react-redux';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import GlobalStyle from '../../global-styles';
 
-export function App() {
+export default function App() {
   return (
     <div>
       <Switch>
@@ -50,15 +44,3 @@ export function App() {
     </div>
   );
 }
-
-const withConnect = connect(
-
-);
-
-
-
-export default compose(
-  // withReducer,
-  // withSaga,
-  withConnect,
-)(App);

@@ -1,7 +1,7 @@
 /**
  * Combine all reducers in this file and export the combined reducers.
  */
-
+import { fromJS } from 'immutable';
 import { combineReducers } from 'redux-immutable';
 import { connectRouter } from 'connected-react-router/immutable';
 import globalReducer from 'containers/App/reducer';
@@ -33,7 +33,7 @@ function routeReducer(state = routeInitialState, action) {
   }
 }
 export default function createReducer(injectedReducers = {}) {
-  return combineReducers({
+  const rootReducer = combineReducers({
     global: globalReducer,
     route: routeReducer,
     language: languageProviderReducer,
@@ -41,6 +41,6 @@ export default function createReducer(injectedReducers = {}) {
   });
 
   // Wrap the root reducer and return a new root reducer with router state
-  // const mergeWithRouterState = connectRouter(history);
-  // return mergeWithRouterState(rootReducer);
+  const mergeWithRouterState = connectRouter(history);
+  return mergeWithRouterState(rootReducer);
 }
