@@ -21,8 +21,8 @@ export function viewPost(id) {
 export function comment(payload) {
   return {
     type: c.COMMENT_ON_POST,
-    payload
-  }
+    payload,
+  };
 }
 
 export function setPost(payload) {
