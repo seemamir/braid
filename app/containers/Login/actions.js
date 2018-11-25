@@ -32,7 +32,7 @@ export function resetResponse() {
 export function createAccount(payload) {
   return {
     type: c.CREATE_ACCOUNT,
-    payload
+    payload,
   };
 }
 
@@ -45,7 +45,13 @@ export function unmountRedux(payload) {
 
 export function SOCIAL_INFO(payload) {
   return {
-    type: DEFAULT_ACTION,
+    type: c.SOCIAL_INFO,
+    payload,
+  };
+}
+export function emailAction(payload) {
+  return {
+    type: c.EMAIL_ACTION,
     payload,
   };
 }

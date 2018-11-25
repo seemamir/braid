@@ -2,17 +2,16 @@ import { take, takeLatest, call, put, cancel } from 'redux-saga/effects';
 import * as c from './constants';
 import * as a from './actions';
 import * as api from './api';
-import { createAccountApi } from "../Signup/api"
+import { createAccountApi } from '../Signup/api';
 export function* login(action) {
   try {
     const { payload } = action;
-    console.log(payload);
+    yield put(a.emailAction(payload.email));
     const response = yield call(api.loginApi, payload);
     yield put(
       a.setResponse({ message: response.data, status: response.status }),
     );
   } catch (error) {
-    
     yield put(
       a.setResponse({
         message: error.response.data,
@@ -29,16 +28,20 @@ export function* create(action) {
       ...payload,
     };
     const response = yield call(createAccountApi, data);
-    yield put(a.setResponse({message: response.data, status: response.status}));
-  } catch (error) {
-    if(error.response && error.response.status && error.response.status === 400 ){
-      const response = yield call(api.loginApi, action.payload);
-      yield put(
+    yield put(
       a.setResponse({ message: response.data, status: response.status }),
     );
-
-    } else{
-
+  } catch (error) {
+    if (
+      error.response &&
+      error.response.status &&
+      error.response.status === 400
+    ) {
+      const response = yield call(api.loginApi, action.payload);
+      yield put(
+        a.setResponse({ message: response.data, status: response.status }),
+      );
+    } else {
       yield put(a.setResponse(error.response.data));
     }
   }
