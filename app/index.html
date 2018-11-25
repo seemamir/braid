@@ -10,8 +10,25 @@
 
   <!-- Allow installing the app to the homescreen -->
   <meta name="mobile-web-app-capable" content="yes">
-
+  <script type="text/javascript" src="https://platform.linkedin.com/in.js">
+    // api_key: 77at0q1dqolhng
+    api_key: 81abyi9l7qhqjh
+    authorize: true
+  </script>
+  <script type="text/javascript">
+    function initGoogleAuth() {
+      window.gapi.load('auth2', function () {
+        window.gapi.auth2.init({
+          // client_id: '828765266129-jicdsdic8lh06tkfh7donin62hns5tcc.apps.googleusercontent.com',
+          client_id: '149395704295-sk29nic0v6pmfu63t6mu5jd0pa8ujkuq.apps.googleusercontent.com',
+          cookiepolicy: 'single_host_origin'
+        })
+      })
+    }
+  </script>
   <link rel="icon" href="/favicon.ico" />
+  <script id="facebook-jssdk" src="https://connect.facebook.net/en_US/sdk.js" async=""></script>
+  <script id="google-jssdk" src="https://apis.google.com/js/platform.js?onload=initGoogleAuth" async="" defer=""></script>
   <title>React.js Boilerplate</title>
 </head>
 
