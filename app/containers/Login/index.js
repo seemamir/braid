@@ -20,13 +20,15 @@ export class Login extends React.Component {
     this.props.history.push('/signup');
   };
 
+  prepareLogin(a) {
+
+  }
+
   googleLogin = () => {
-    console.log(window.gapi.load("client:auth2"));
     try {
-      window["gapi"].auth2.getAuthInstance().then((auth2) => {
-        auth2.signIn().then((googleUser) => {
-          const profile = googleUser.getBasicProfile()
-          console.log(profile);
+      window.gapi.auth2.getAuthInstance().then(auth2 => {
+        auth2.signIn().then(googleUser => {
+          const profile = googleUser.getBasicProfile();
           // const payload = {
           //   auth_data: {
           //     credentials: {
@@ -49,75 +51,89 @@ export class Login extends React.Component {
           // }).then(() => {
           //   this.handleLoginRedirect()
           // })
-        })
-      })
-      
+          this.prepareLogin({
+            email: profile.getEmail(),
+            image: profile.getImageUrl(),
+          });
+        });
+      });
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   linkedInLogin = () => {
-    window["IN"].User.authorize(() => {
-      window["IN"].API.Profile('me').fields('id', 'first-name', 'last-name', 'email-address', 'picture-url').result((res) => {
-        const payload = {
-          auth_data: {
-            credentials: {
-              expires_at: Date.now() + window["IN"].ENV.auth.oauth_expires_in * 1000,
-              token: window["IN"].ENV.auth.oauth_token
-            },
-            info: {
-              id: res.values[0].id,
-              name: res.values[0].firstName + ' ' + res.values[0].lastName,
-              image_url: res.values[0].pictureUrl,
-              email: res.values[0].emailAddress
-            },
-            provider: 'linkedin',
-            uid: res.values[0].id
-          }
-        }
-        console.log(payload);
-      })
-    })
-  }
-
-  facebookLogin = () => {
-    
-    try {
-      window["FB"].login((response) => {
-        // Handle the response object, like in statusChangeCallback() in our demo
-        // code.
-        window["FB"].api('/me?fields=id,name,picture,email', (res) => {
-          console.log(res);
+    window.IN.User.authorize(() => {
+      window.IN.API.Profile('me')
+        .fields('id', 'first-name', 'last-name', 'email-address', 'picture-url')
+        .result(res => {
+          this.prepareLogin({
+            email: res.values[0].emailAddress,
+            image: res.values[0].pictureUrl,
+          });
           // const payload = {
           //   auth_data: {
           //     credentials: {
-          //       expires_at: Date.now() + response.authResponse.expiresIn * 1000,
-          //       token: response.authResponse.accessToken
+          //       expires_at:
+          //         Date.now() + window.IN.ENV.auth.oauth_expires_in * 1000,
+          //       token: window.IN.ENV.auth.oauth_token,
           //     },
           //     info: {
-          //       id: res.id,
-          //       name: res.name,
-          //       image_url: res.picture.data.url,
-          //       email: res.email
+          //       id: res.values[0].id,
+          //       name: `${res.values[0].firstName} ${res.values[0].lastName}`,
+          //       image_url: res.values[0].pictureUrl,
+          //       email: res.values[0].emailAddress,
           //     },
-          //     provider: 'facebook',
-          //     uid: res.id
-          //   }
-          // }
-          // this.socialLogin({
-          //   platform: 'facebook',
-          //   payload
-          // }).then(() => {
-          //   this.handleLoginRedirect()
-          // })
-        })
-      }, { scope: 'public_profile,email' })
+          //     provider: 'linkedin',
+          //     uid: res.values[0].id,
+          //   },
+          // };
+          // console.log(payload);
+        });
+    });
+  };
 
+  facebookLogin = () => {
+    try {
+      window.FB.login(
+        response => {
+          // Handle the response object, like in statusChangeCallback() in our demo
+          // code.
+          window.FB.api('/me?fields=id,name,picture,email', res => {
+            this.prepareLogin({
+              email: res.email,
+              image: res.picture.data.url,
+            });
+            // const payload = {
+            //   auth_data: {
+            //     credentials: {
+            //       expires_at: Date.now() + response.authResponse.expiresIn * 1000,
+            //       token: response.authResponse.accessToken
+            //     },
+            //     info: {
+            //       id: res.id,
+            //       name: res.name,
+            //       image_url: res.picture.data.url,
+            //       email: res.email
+            //     },
+            //     provider: 'facebook',
+            //     uid: res.id
+            //   }
+            // }
+            // this.socialLogin({
+            //   platform: 'facebook',
+            //   payload
+            // }).then(() => {
+            //   this.handleLoginRedirect()
+            // })
+          });
+        },
+        { scope: 'public_profile,email' },
+      );
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -185,9 +201,24 @@ export class Login extends React.Component {
                     <span>Sign in with</span>
                   </div>
                   <div style={{ textAlign: 'center' }}>
-                    <SocialIcon style={{cursor: 'pointer'}} onClick={() => this.facebookLogin() } icon="facebook" color="#3F51B5" />
-                    <SocialIcon style={{cursor: 'pointer'}} onClick={() => this.googleLogin() } icon="google-plus" color="#F06292" />
-                    <SocialIcon style={{cursor: 'pointer'}} onClick={() => this.linkedInLogin() } icon="linkedin" color="#546E7A" />
+                    <SocialIcon
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => this.facebookLogin()}
+                      icon="facebook"
+                      color="#3F51B5"
+                    />
+                    <SocialIcon
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => this.googleLogin()}
+                      icon="google-plus"
+                      color="#F06292"
+                    />
+                    <SocialIcon
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => this.linkedInLogin()}
+                      icon="linkedin"
+                      color="#546E7A"
+                    />
                   </div>
                   <div className="content-divider ">
                     <span>Don't have account?</span>
