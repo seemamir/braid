@@ -25,6 +25,11 @@ const GlobalStyle = createGlobalStyle`
     width:85%;
     margin: 30px auto;
   }
+  .bg-white{
+    background: white;
+    padding:20px;
+  }
+ 
   p { 
     color: #999
   }
