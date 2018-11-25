@@ -23,6 +23,7 @@ export function* comment(action) {
 
 export function* fetchComments(action) {
   try {
+<<<<<<< HEAD
     console.log(action);
     const response = yield call(api.comments, action.payload);
     console.log(a);
@@ -31,6 +32,11 @@ export function* fetchComments(action) {
   } catch (e) {
     console.log(e);
   }
+=======
+    const response = yield call(api.comments, action.payload);
+    yield put(a.setPostComments(response.data));
+  } catch (e) {}
+>>>>>>> 699c859349d702ce3cf04b1775a5170dfe052a33
 }
 
 export function* update(action) {

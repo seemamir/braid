@@ -6,6 +6,7 @@ import makeSelectNewsPage from '../Login/selectors';
 
 export function* index(action) {
   try {
+    console.log(action.payload);
     const response = yield call(api.fetchPosts(action.payload));
     console.log(response);
     yield put(a.setPosts(response.data));

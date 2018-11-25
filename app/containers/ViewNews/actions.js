@@ -26,7 +26,6 @@ export function comment(payload) {
 }
 
 export function fetchPostComments(payload) {
-  console.log(payload);
   return {
     type: c.FETCH_POST_COMMENTS,
     payload,
