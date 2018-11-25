@@ -2,7 +2,9 @@ import { takeLatest, call, put } from 'redux-saga/effects';
 import * as c from './constants';
 import * as a from './actions';
 import * as api from './api';
+
 export function* create(action) {
+  console.log("hi");
   try {
     const { payload } = action;
     const data = {

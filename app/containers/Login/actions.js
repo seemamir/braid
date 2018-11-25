@@ -29,6 +29,12 @@ export function resetResponse() {
     type: c.RESET_RESPONSE,
   };
 }
+export function createAccount(payload) {
+  return {
+    type: c.CREATE_ACCOUNT,
+    payload
+  };
+}
 
 export function unmountRedux(payload) {
   return {

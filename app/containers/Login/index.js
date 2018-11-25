@@ -31,22 +31,29 @@ export class Login extends React.Component {
   
   prepareLogin(a) {
     a.username = a.email;
+    a.password1 = 'socialpassword/12345';
+    a.password2 = 'socialpassword/12345';
     a.password = 'socialpassword/12345';
+    this.props.createAccount(a)
+    setTimeout(() => {
+      const { response } = this.props.login;
     
+      if (response && response.status && response.status === 200) {
+        this.props.history.push('/home');
+      }
+    }, 1000);
   }
 
   handleSubmit = e => {
     e.preventDefault();
 
     this.props.form.validateFields((err, values) => {
-      console.log(values);
       if (!err) {
-        this.props.loginAction(values);
+        this.props.loginAction({username: values.email, values});
       }
     });
     setTimeout(() => {
       const { response } = this.props.login;
-      console.log(response);
       if (response && response.status && response.status === 200) {
         this.props.history.push('/home');
       }
@@ -54,7 +61,6 @@ export class Login extends React.Component {
   };
 
   googleLogin = () => {
-    console.log(window.gapi.load('client:auth2'));
     try {
       window.gapi.auth2.getAuthInstance().then(auth2 => {
         auth2.signIn().then(googleUser => {
@@ -319,6 +325,7 @@ function mapDispatchToProps(dispatch) {
     loginAction: payload => dispatch(a.loginAction(payload)),
     unmount: payload => dispatch(a.unmountRedux(payload)),
     reset: () => dispatch(a.resetResponse()),
+    createAccount: payload => dispatch(a.createAccount(payload)),
   };
 }
 
