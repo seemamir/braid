@@ -7,14 +7,17 @@ const user = loadState();
 
 // The initial state of the App
 const initialState = fromJS({
-  loggedInInfo: user,
+  loggedInInfo: {},
   currentUser: {},
+  email: {},
 });
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
     case c.LOGGED_IN_USER:
       return state.set('loggedInInfo', action.payload);
+    case c.SET_EMAIL:
+      return state.set('email', action.payload);
     case c.LOGOUT_USER:
       clearState();
       return state.set('loggedInInfo', null);
