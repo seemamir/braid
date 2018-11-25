@@ -5,6 +5,7 @@
  */
 
 export const DEFAULT_ACTION = 'app/Login/DEFAULT_ACTION';
+export const SOCIAL_INFO = 'app/Login/SOCIAL_INFO';
 export const LOGIN_ACTION = 'app/Login/LOGIN_ACTION';
 export const SET_RESPONSE = 'app/Login/SET_RESPONSE';
 export const RESET_RESPONSE = 'app/Login/RESET_RESPONSE';

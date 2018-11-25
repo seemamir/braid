@@ -36,3 +36,10 @@ export function unmountRedux(payload) {
     payload,
   };
 }
+
+export function SOCIAL_INFO(payload) {
+  return {
+    type: DEFAULT_ACTION,
+    payload,
+  };
+}

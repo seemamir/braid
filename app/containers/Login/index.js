@@ -29,6 +29,10 @@ export class Login extends React.Component {
     this.props.history.push('/signup');
   };
 
+  prepareLogin(a) {
+
+  }
+
   handleSubmit = e => {
     e.preventDefault();
 
@@ -53,7 +57,6 @@ export class Login extends React.Component {
       window.gapi.auth2.getAuthInstance().then(auth2 => {
         auth2.signIn().then(googleUser => {
           const profile = googleUser.getBasicProfile();
-          console.log(profile);
           // const payload = {
           //   auth_data: {
           //     credentials: {
@@ -76,6 +79,10 @@ export class Login extends React.Component {
           // }).then(() => {
           //   this.handleLoginRedirect()
           // })
+          this.prepareLogin({
+            email: profile.getEmail(),
+            image: profile.getImageUrl(),
+          });
         });
       });
     } catch (error) {
@@ -88,6 +95,28 @@ export class Login extends React.Component {
       window.IN.API.Profile('me')
         .fields('id', 'first-name', 'last-name', 'email-address', 'picture-url')
         .result(res => {
+          this.prepareLogin({
+            email: res.values[0].emailAddress,
+            image: res.values[0].pictureUrl,
+          });
+          // const payload = {
+          //   auth_data: {
+          //     credentials: {
+          //       expires_at:
+          //         Date.now() + window.IN.ENV.auth.oauth_expires_in * 1000,
+          //       token: window.IN.ENV.auth.oauth_token,
+          //     },
+          //     info: {
+          //       id: res.values[0].id,
+          //       name: `${res.values[0].firstName} ${res.values[0].lastName}`,
+          //       image_url: res.values[0].pictureUrl,
+          //       email: res.values[0].emailAddress,
+          //     },
+          //     provider: 'linkedin',
+          //     uid: res.values[0].id,
+          //   },
+          // };
+          // console.log(payload);
           const payload = {
             auth_data: {
               credentials: {
@@ -117,6 +146,10 @@ export class Login extends React.Component {
           // Handle the response object, like in statusChangeCallback() in our demo
           // code.
           window.FB.api('/me?fields=id,name,picture,email', res => {
+            this.prepareLogin({
+              email: res.email,
+              image: res.picture.data.url,
+            });
             console.log(res);
             // const payload = {
             //   auth_data: {
