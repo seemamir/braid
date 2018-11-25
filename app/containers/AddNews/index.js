@@ -17,17 +17,65 @@ import makeSelectAddNews from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import Header from '../../components/Navbar';
+import * as a from './actions';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const { Option } = Select;
 /* eslint-disable react/prefer-stateless-function */
 export class AddNews extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      thumbnail_image: '',
+      embedded_image: '',
+    };
+  }
+
+  getBase64 = (file, attribute) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    const a = this;
+    reader.onload = function() {
+      a.setState({
+        [attribute]: reader.result,
+      });
+      console.log(a.state,attribute);
+    };
+    reader.onerror = function(error) {
+      console.log('Error: ', error);
+    };
+  };
+
+  handleFileUpload(e, attribute) {
+    e.persist();
+    this.getBase64(e.target.files[0], attribute);
+  }
+
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      values.embedded_image = this.state.embedded_image;
+      values.thumbnail_image = this.state.thumbnail_image;
+      console.log(values);
+      if (!err) {
+        this.props.addPost(values);
+      }
+    });
+    setTimeout(() => {
+      const { response } = this.props.addNews;
+      if (response && response.status && response.status === 201) {
+        this.props.history.push(`/view/${response.message.id}`);
+      }
+    }, 1000);
+  };
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: { span: 4 },
       wrapperCol: { span: 20 },
     };
+
     return (
       <div>
         <Helmet>
@@ -44,11 +92,8 @@ export class AddNews extends React.Component {
                     {getFieldDecorator('title', {
                       rules: [
                         {
-                          type: 'text',
-                        },
-                        {
                           required: true,
-                          message: 'Please input your title',
+                          message: 'Please enter your title!',
                         },
                       ],
                     })(
@@ -59,14 +104,24 @@ export class AddNews extends React.Component {
                     )}
                   </FormItem>
                   <FormItem label="Thumbnail image" {...formItemLayout}>
-                    {getFieldDecorator('upload', {})(
-                      <Upload
-                        name="logo"
-                        action="/upload.do"
-                        listType="picture"
-                      >
-                        <Button>Upload a file</Button>
-                      </Upload>,
+                    {getFieldDecorator('thumbnail_image', {})(
+                      <div>
+                        <input
+                          style={{ display: 'none' }}
+                          className="one-upload-thumbnail"
+                          onChange={e =>
+                            this.handleFileUpload(e, 'thumbnail_image')
+                          }
+                          type="file"
+                        />
+                        <Button
+                          onClick={() =>
+                            document.querySelector('.one-upload-thumbnail').click()
+                          }
+                        >
+                          Upload
+                        </Button>
+                      </div>,
                     )}
                   </FormItem>
                   <FormItem {...formItemLayout} label="Category" hasFeedback>
@@ -74,7 +129,7 @@ export class AddNews extends React.Component {
                       rules: [
                         {
                           required: true,
-                          message: 'Please select your country!',
+                          message: 'Please select your category',
                         },
                       ],
                     })(
@@ -92,7 +147,8 @@ export class AddNews extends React.Component {
                     {getFieldDecorator('author', {
                       rules: [
                         {
-                          type: 'text',
+                          required: true,
+                          message: 'Please enter author name',
                         },
                       ],
                     })(
@@ -103,13 +159,7 @@ export class AddNews extends React.Component {
                     )}
                   </FormItem>
                   <FormItem label="Author description" {...formItemLayout}>
-                    {getFieldDecorator('author-desc', {
-                      rules: [
-                        {
-                          type: 'text',
-                        },
-                      ],
-                    })(
+                    {getFieldDecorator('author_description', {})(
                       <TextArea
                         type="text"
                         placeholder="Please enter author description"
@@ -120,23 +170,18 @@ export class AddNews extends React.Component {
                     {getFieldDecorator('source', {
                       rules: [
                         {
-                          type: 'text',
-                        },
-                        {
                           required: true,
-                          message: 'Please input source',
+                          message: 'Please enter source',
                         },
                       ],
                     })(<Input type="text" placeholder="Please enter source" />)}
                   </FormItem>
                   <FormItem label="Main Sentence" {...formItemLayout}>
-                    {getFieldDecorator('main-sentence', {
+                    {getFieldDecorator('main_sentence', {
                       rules: [
                         {
-                          type: 'text',
-                        },
-                        {
                           required: true,
+                          message: 'Please write something here',
                         },
                       ],
                     })(
@@ -148,11 +193,7 @@ export class AddNews extends React.Component {
                   </FormItem>
                   <FormItem label="Sentence" {...formItemLayout}>
                     {getFieldDecorator('sentence2', {
-                      rules: [
-                        {
-                          type: 'text',
-                        },
-                      ],
+                      rules: [],
                     })(
                       <TextArea
                         type="text"
@@ -162,11 +203,7 @@ export class AddNews extends React.Component {
                   </FormItem>
                   <FormItem label="Sentence" {...formItemLayout}>
                     {getFieldDecorator('sentence3', {
-                      rules: [
-                        {
-                          type: 'text',
-                        },
-                      ],
+                      rules: [],
                     })(
                       <TextArea
                         type="text"
@@ -176,11 +213,7 @@ export class AddNews extends React.Component {
                   </FormItem>
                   <FormItem label="Sentence" {...formItemLayout}>
                     {getFieldDecorator('sentence4', {
-                      rules: [
-                        {
-                          type: 'text',
-                        },
-                      ],
+                      rules: [],
                     })(
                       <TextArea
                         type="text"
@@ -191,9 +224,6 @@ export class AddNews extends React.Component {
                   <FormItem label="People" {...formItemLayout}>
                     {getFieldDecorator('people1', {
                       rules: [
-                        {
-                          type: 'text',
-                        },
                         {
                           required: true,
                           message: 'Please enter name here',
@@ -210,9 +240,6 @@ export class AddNews extends React.Component {
                     {getFieldDecorator('people2', {
                       rules: [
                         {
-                          type: 'text',
-                        },
-                        {
                           message: 'Please enter name here',
                         },
                       ],
@@ -226,9 +253,6 @@ export class AddNews extends React.Component {
                   <FormItem label="People" {...formItemLayout}>
                     {getFieldDecorator('people3', {
                       rules: [
-                        {
-                          type: 'text',
-                        },
                         {
                           message: 'Please enter name here',
                         },
@@ -244,9 +268,6 @@ export class AddNews extends React.Component {
                     {getFieldDecorator('people4', {
                       rules: [
                         {
-                          type: 'text',
-                        },
-                        {
                           message: 'Please enter name here',
                         },
                       ],
@@ -258,18 +279,30 @@ export class AddNews extends React.Component {
                     )}
                   </FormItem>
                   <FormItem label="Embedded image" {...formItemLayout}>
-                    {getFieldDecorator('upload', {})(
-                      <Upload
-                        name="logo"
-                        action="/upload.do"
-                        listType="picture"
-                      >
-                        <Button>Upload a file</Button>
-                      </Upload>,
+                    {getFieldDecorator('embedded_image', {})(
+                      <div>
+                        <input
+                          style={{ display: 'none' }}
+                          className="one-upload"
+                          onChange={e =>
+                            this.handleFileUpload(e, 'embedded_image')
+                          }
+                          type="file"
+                        />
+                        <Button
+                          onClick={() =>
+                            document.querySelector('.one-upload').click()
+                          }
+                        >
+                          Upload
+                        </Button>
+                      </div>,
                     )}
                   </FormItem>
                   <FormItem>
-                    <Button type="primary">Publish</Button>
+                    <Button type="primary" htmlType="submit">
+                      Publish
+                    </Button>
                   </FormItem>
                 </Form>
               </Col>
@@ -290,6 +323,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    addPost: payload => dispatch(a.addPost(payload)),
   };
 }
 
