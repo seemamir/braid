@@ -39,14 +39,12 @@ export class Login extends React.Component {
     e.preventDefault();
 
     this.props.form.validateFields((err, values) => {
-      console.log(values);
       if (!err) {
         this.props.loginAction(values);
       }
     });
     setTimeout(() => {
       const { response } = this.props.login;
-      console.log(response);
       if (response && response.status && response.status === 200) {
         this.props.history.push('/home');
       }
@@ -54,7 +52,6 @@ export class Login extends React.Component {
   };
 
   googleLogin = () => {
-    console.log(window.gapi.load('client:auth2'));
     try {
       window.gapi.auth2.getAuthInstance().then(auth2 => {
         auth2.signIn().then(googleUser => {

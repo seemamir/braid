@@ -13,12 +13,13 @@ import { compose } from 'redux';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { Row, Col, Icon } from 'antd';
+import { Row, Col, Icon, Button } from 'antd';
 import styled from 'styled-components';
 import makeSelectViewNews from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import Header from '../../components/Navbar/Loadable';
+import * as a from './actions';
 const Wrapper = styled.div`
   margin: 20px auto;
   text-align: center;
@@ -37,16 +38,25 @@ const Sidebar = styled.div`
   height: 500px;
   margin-left: 50px;
   i {
-    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+  img {
+    margin-top: 50px;
   }
 `;
 /* eslint-disable react/prefer-stateless-function */
 export class ViewNews extends React.Component {
+  componentDidMount() {
+    const { id } = this.props.match.params;
+    this.props.viewPost(id);
+  }
+
   render() {
+    const { post } = this.props.viewNews;
     return (
       <div>
         <Helmet>
-          <title>ViewNews</title>
+          <title>View Post</title>
           <meta name="description" content="Description of ViewNews" />
         </Helmet>
         <Header />
@@ -54,10 +64,10 @@ export class ViewNews extends React.Component {
           <div className="bg-white">
             <Row>
               <Col span={24}>
-                <h1>Hello world</h1>
-                <h3>Category: Politics</h3>
+                <h1>{post.title}</h1>
+                <h3>Category: {post.category}</h3>
                 <p>
-                  Author: John <span>Source: CBN</span>
+                  Author: {post.author} <span>Source: {post.source}</span>
                 </p>
               </Col>
             </Row>
@@ -66,67 +76,99 @@ export class ViewNews extends React.Component {
                 <h2 className="main-heading">Summary</h2>
                 <Row>
                   <Col span={12}>
-                    <p>lorem djhasdvasd asdasgdjasbdnasda dasjhdasvdasd</p>
+                    <p>{post.sentence2}</p>
                   </Col>
                   <Col span={12}>
-                    <p>
-                      Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                      Aliquid eveniet magni nemo dolorum minima sint laboriosam
-                      eum quasi maiores obcaecati dolore voluptatem explicabo
-                      distinctio soluta cupiditate assumenda, aperiam veniam
-                      nulla?
-                    </p>
+                    <p>{post.sentence3}</p>
                   </Col>
                 </Row>
                 <Row>
                   <Col span={12} offset={6}>
                     <div className="main-sentence">
                       <h2>Main Sentence</h2>
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Cum necessitatibus ducimus laboriosam officia! Dolores
-                        labore est eum aliquid odit voluptatum dolor ducimus
-                        sequi earum quibusdam inventore obcaecati, voluptatem
-                        quasi! Natus!
-                      </p>
+                      <p>{post.main_sentence}</p>
                     </div>
                   </Col>
                 </Row>
                 <Row>
                   <Col span={12} offset={6}>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Cum necessitatibus ducimus laboriosam officia! Dolores
-                      labore est eum aliquid odit voluptatum dolor ducimus sequi
-                      earum quibusdam inventore obcaecati, voluptatem quasi!
-                      Natus!
-                    </p>
+                    <p>{post.sentence4}</p>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col span={20} offset={2}>
+                    <h2>Comments</h2>
+                    <Row>
+                      <Col span={20}>
+                        <textarea
+                          name="comment"
+                          rows="3"
+                          placeholder="Write ur comment here"
+                        />
+                      </Col>
+                      <Col span={4}>
+                        <Button type="primary">Publish</Button>
+                      </Col>
+                    </Row>
                   </Col>
                 </Row>
               </Col>
               <Col span={8}>
                 <Sidebar>
                   <h2>People</h2>
-                  <Icon
-                    type="heart"
-                    theme="filled"
-                    style={{ fontSize: '50px', color: 'red' }}
-                  />
-                  <Icon
-                    type="smile"
-                    theme="filled"
-                    style={{ fontSize: '50px', color: '#faad14' }}
-                  />
-                  <Icon
-                    type="frown"
-                    theme="filled"
-                    style={{ fontSize: '50px', color: '#faad14' }}
-                  />
-                  <Icon
-                    type="meh"
-                    theme="filled"
-                    style={{ fontSize: '50px', color: '#faad14' }}
-                  />
+                  <Row>
+                    <Col span={4} />
+                    <Col span={4}>
+                      <p>{post.people1}</p>
+                      <Icon
+                        type="heart"
+                        theme="filled"
+                        style={{ fontSize: '50px', color: 'red' }}
+                      />
+                      <h4>Like</h4>
+                      <span>11</span>
+                    </Col>
+                    <Col span={4}>
+                      <p>{post.people2}</p>
+                      <Icon
+                        type="smile"
+                        theme="filled"
+                        style={{ fontSize: '50px', color: '#faad14' }}
+                      />
+                      <h4>Funny</h4>
+                      <span>1</span>
+                    </Col>
+                    <Col span={4}>
+                      <p>{post.people3}</p>
+                      <Icon
+                        type="frown"
+                        theme="filled"
+                        style={{ fontSize: '50px', color: '#faad14' }}
+                      />
+                      <h4>Sad</h4>
+                      <span>17</span>
+                    </Col>
+                    <Col span={4}>
+                      <p>{post.people4}</p>
+                      <Icon
+                        type="meh"
+                        theme="filled"
+                        style={{ fontSize: '50px', color: '#faad14' }}
+                      />
+                      <h4>Angry</h4>
+                      <span>19</span>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col span={20} offset={2}>
+                      <img
+                        width="200"
+                        height="200"
+                        src={post.embedded_image}
+                        alt="Embedded image"
+                      />
+                    </Col>
+                  </Row>
                 </Sidebar>
               </Col>
             </Row>
@@ -148,6 +190,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    viewPost: id => dispatch(a.viewPost(id)),
   };
 }
 

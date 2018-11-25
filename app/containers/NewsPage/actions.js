@@ -4,10 +4,16 @@
  *
  */
 
-import { DEFAULT_ACTION } from './constants';
+import * as c from './constants';
 
 export function defaultAction() {
   return {
-    type: DEFAULT_ACTION,
+    type: c.DEFAULT_ACTION,
+  };
+}
+export function fetchPosts(payload) {
+  return {
+    type: c.FETCH_POSTS,
+    payload,
   };
 }
