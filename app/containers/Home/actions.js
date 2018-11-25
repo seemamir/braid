@@ -17,6 +17,14 @@ export function fetchPosts() {
     type: c.FETCH_POSTS,
   };
 }
+
+export function fetchUser(payload) {
+  return {
+    type: c.FETCH_USER,
+    payload
+  }
+}
+
 export function setPosts(payload) {
   return {
     type: c.SET_POSTS,

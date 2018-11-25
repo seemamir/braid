@@ -19,6 +19,7 @@ const { Content } = Layout;
 export class Home extends React.Component {
   componentDidMount() {
     this.props.fetchPosts();
+    this.props.fetchUser()
   }
 
   viewPost = id => {
@@ -90,6 +91,7 @@ function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     fetchPosts: () => dispatch(a.fetchPosts()),
+    fetchUser: () => dispatch(a.fetchUser(localStorage.getItem('email'))),
   };
 }
 
