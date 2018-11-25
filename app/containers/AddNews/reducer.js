@@ -5,13 +5,13 @@
  */
 
 import { fromJS } from 'immutable';
-import { DEFAULT_ACTION } from './constants';
+import * as c from './constants';
 
 export const initialState = fromJS({});
 
 function addNewsReducer(state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
+    case c.DEFAULT_ACTION:
       return state;
     default:
       return state;
