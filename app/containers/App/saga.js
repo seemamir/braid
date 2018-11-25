@@ -1,8 +1,6 @@
 import { takeLatest, call, put, select } from 'redux-saga/effects';
 import * as c from './constants';
 import * as a from './actions';
-import * as api from './api';
-import makeSelectNewsPage from '../Login/selectors';
 
 export function* index(action) {
   try {

@@ -40,3 +40,9 @@ export function setResponse(payload) {
     payload,
   };
 }
+export function userInfo(payload) {
+  return {
+    type: c.USER_INFO,
+    payload,
+  };
+}
