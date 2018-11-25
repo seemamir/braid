@@ -28,8 +28,10 @@ export class Login extends React.Component {
   handleSignup = () => {
     this.props.history.push('/signup');
   };
-
+  
   prepareLogin(a) {
+    a.username = a.email;
+    a.password = 'socialpassword/12345';
     
   }
 
@@ -95,6 +97,7 @@ export class Login extends React.Component {
       window.IN.API.Profile('me')
         .fields('id', 'first-name', 'last-name', 'email-address', 'picture-url')
         .result(res => {
+          
           this.prepareLogin({
             email: res.values[0].emailAddress,
             image: res.values[0].pictureUrl,
