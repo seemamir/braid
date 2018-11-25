@@ -60,10 +60,9 @@ export class ViewNews extends React.Component {
   constructor(props) {
     super(props);
     const { post } = props.viewNews;
-    console.log(post);
     this.state = {
       commentField: '',
-      sentence2: post.sentence2 ? post.sentence2 : '',
+      sentence2: post.sentence2,
       sentence3: post.sentence3 ? post.sentence3 : '',
       sentence4: post.sentence4 ? post.sentence4 : '',
       main_sentence: post.main_sentence ? post.main_sentence : '',
@@ -108,7 +107,6 @@ export class ViewNews extends React.Component {
 
   render() {
     const { post, comments } = this.props.viewNews;
-    console.log(comments);
     return (
       <div>
         <Helmet>
@@ -271,6 +269,13 @@ export class ViewNews extends React.Component {
                     >
                       Publish
                     </Button>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col span={20}>
+                    {console.log(comments)}
+                    {/* <ul>{comments && comments.map((item) => {
+                      return <li>{item.comment}</li>})}</ul> */}
                   </Col>
                 </Row>
               </Col>

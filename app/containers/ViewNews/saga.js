@@ -5,7 +5,6 @@ import * as api from './api';
 export function* view(action) {
   try {
     const { id } = action;
-    console.log(id);
     const response = yield call(api.viewPostApi, id);
     yield put(a.setPost(response.data));
   } catch (error) {
@@ -16,7 +15,6 @@ export function* view(action) {
 export function* comment(action) {
   try {
     const response = yield call(api.comment, action.payload);
-    console.log(response);
   } catch (e) {
     console.log(e.response);
   }
@@ -24,11 +22,10 @@ export function* comment(action) {
 
 export function* fetchComments(action) {
   try {
-    const response = yield call(api.comments, action.payload);
+    const response = yield call(api.commentsApi, action.payload);
+    console.log(response);
     yield put(a.setPostComments(response.data));
-  } catch (e) {
-
-  }
+  } catch (e) {}
 }
 
 export function* update(action) {
