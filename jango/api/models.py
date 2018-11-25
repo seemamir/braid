@@ -12,6 +12,8 @@ REACTION_CHOICES = (
 class Post(models.Model):
   title = models.CharField(max_length=250)
   author = models.CharField(max_length=250)
+  category = models.CharField(max_length=250)
+  source = models.CharField(max_length=250)
   author_description = models.TextField()
   main_sentence = models.TextField()
   sentence2 = models.TextField()

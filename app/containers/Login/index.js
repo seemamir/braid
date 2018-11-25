@@ -30,7 +30,7 @@ export class Login extends React.Component {
   };
 
   prepareLogin(a) {
-
+    
   }
 
   handleSubmit = e => {

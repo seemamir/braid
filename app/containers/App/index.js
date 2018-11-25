@@ -18,6 +18,7 @@ import NewsPage from 'containers/NewsPage/Loadable';
 import ViewNews from 'containers/ViewNews/Loadable';
 import AddNews from 'containers/AddNews/Loadable';
 import ResetPassword from 'containers/ResetPassword/Loadable';
+import SocialLoginDone from 'containers/SocialLoginDone/Loadable';
 import ForgetPassword from 'containers/ForgetPassword/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
@@ -35,6 +36,7 @@ export default function App() {
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/reset-password" component={ResetPassword} />
         <Route exact path="/forget-password" component={ForgetPassword} />
+        <Route exact path="/social-login-done" component={SocialLoginDone} />
         <Route component={NotFoundPage} />
       </Switch>
       <Footer />
