@@ -3,9 +3,9 @@ import * as c from './constants';
 import * as a from './actions';
 import * as api from './api';
 
-export function* index() {
+export function* index(action) {
   try {
-    const response = yield call(api.fetchPosts);
+    const response = yield call(api.fetchPosts(action.payload));
     yield put(a.setPosts(response.data));
   } catch (error) {
     yield put(a.setResponse(error.response));

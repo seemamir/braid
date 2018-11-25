@@ -12,17 +12,19 @@ export function defaultAction() {
   };
 }
 
-export function fetchPosts() {
+export function fetchPosts(payload) {
+  console.log(payload);
   return {
     type: c.FETCH_POSTS,
+    payload
   };
 }
 
 export function fetchUser(payload) {
   return {
     type: c.FETCH_USER,
-    payload
-  }
+    payload,
+  };
 }
 
 export function setPosts(payload) {
