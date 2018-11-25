@@ -21,16 +21,29 @@ export function* comment(action) {
   }
 }
 
+export function* fetchComments(action) {
+  try {
+    const response = yield call(api.comments(action.payload));
+    console.log(response);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 export function* update(action) {
   try {
     const { payload, id } = action;
     const response = yield call(api.updatePostApi, id, payload);
   } catch (error) {}
 }
+
+
 // Individual exports for testing
 export default function* viewNewsSaga() {
   // See example in containers/HomePage/saga.js
   yield takeLatest(c.VIEW_POST, view);
   yield takeLatest(c.COMMENT_ON_POST, comment);
+  yield takeLatest(c.FETCH_POST_COMMENTS, fetchComments);
+  yield takeLatest(c.UPDATE_POST, update);
   yield takeLatest(c.UPDATE_POST, update);
 }

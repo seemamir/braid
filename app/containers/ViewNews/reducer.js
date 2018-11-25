@@ -9,6 +9,7 @@ import * as c from './constants';
 
 export const initialState = fromJS({
   post: {},
+  comments: [],
 });
 
 function viewNewsReducer(state = initialState, action) {
@@ -17,6 +18,8 @@ function viewNewsReducer(state = initialState, action) {
       return state;
     case c.SET_POST:
       return state.set('post', action.payload);
+    case c.SET_POST_COMMENTS:
+      return state.set('comments', action.payload);
     default:
       return state;
   }
