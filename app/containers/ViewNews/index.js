@@ -12,6 +12,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
 import injectSaga from 'utils/injectSaga';
+import {get} from "lodash"
 import injectReducer from 'utils/injectReducer';
 import { Row, Col, Icon, Button } from 'antd';
 import styled from 'styled-components';
@@ -46,9 +47,27 @@ const Sidebar = styled.div`
 `;
 /* eslint-disable react/prefer-stateless-function */
 export class ViewNews extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      commentField: ''
+    }
+  }
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.viewPost(id);
+  }
+
+  publishComment = () => {
+    let {state: {commentField}} = this;
+    if (commentField) {
+      this.props.match.params['id']
+      this.props.comment({
+        comment: this.state.commentField,
+        post: parseInt(get(this,'props.match.params.id',null)),
+        user: 1
+      })
+    }
   }
 
   render() {
@@ -103,11 +122,13 @@ export class ViewNews extends React.Component {
                         <textarea
                           name="comment"
                           rows="3"
+                          onChange={(e) => this.setState({commentField: e.target.value}) }
                           placeholder="Write ur comment here"
                         />
+                        { this.state.commentField }
                       </Col>
                       <Col span={4}>
-                        <Button type="primary">Publish</Button>
+                        <Button onClick={() => this.publishComment() } type="primary">Publish</Button>
                       </Col>
                     </Row>
                   </Col>
@@ -191,6 +212,7 @@ function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     viewPost: id => dispatch(a.viewPost(id)),
+    comment: data => dispatch(a.comment(data)),
   };
 }
 
