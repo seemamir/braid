@@ -16,7 +16,7 @@ const FormItem = Form.Item;
 /* eslint-disable react/prefer-stateless-function */
 export class Signup extends React.Component {
   handleLogin = () => {
-    this.props.history.push(`/`);
+    this.props.history.push(`/login`);
   };
 
   handleSubmit = e => {
@@ -27,10 +27,25 @@ export class Signup extends React.Component {
         this.props.createAccount(values);
       }
     });
+    setTimeout(() => {
+      const { response } = this.props.signup;
+      if (response && response.status && response.status === 201) {
+        this.props.history.push('/login');
+      }
+    }, 1000);
   };
 
+  handleErrors = () => {
+    const { response } = this.props.signup;
+    if(response && response.message && resposne.message.non_field_errors){
+      return response.message.non_field_errors
+    }
+
+  }
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { response } = this.props.signup;
+    
     return (
       <div>
         <Helmet>
@@ -105,14 +120,15 @@ export class Signup extends React.Component {
                     />,
                   )}
                 </FormItem>
-                {/* {this.props.response &&
-                  this.props.response.status == 0 && (
+                {response &&
+                  response.status &&
+                  response.status !== 201 && (
                     <Alert
-                      message={this.props.response}
+                      message={response.message && response.message.password1 ? response.message.password1: "something went wrong"}
                       type="error"
                       showIcon
                     />
-                  )} */}
+                  )}
                 <FormItem>
                   <Button
                     type="primary"
