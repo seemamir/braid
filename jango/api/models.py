@@ -13,7 +13,7 @@ class Post(models.Model):
   title = models.CharField(max_length=250)
   author = models.CharField(max_length=250)
   author_description = models.TextField()
-  sentence1 = models.TextField()
+  main_sentence = models.TextField()
   sentence2 = models.TextField()
   sentence3 = models.TextField()
   sentence4 = models.TextField()
