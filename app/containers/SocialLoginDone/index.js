@@ -18,7 +18,6 @@ import makeSelectSocialLoginDone from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
-import Styles from "./styles.js";
 
 /* eslint-disable react/prefer-stateless-function */
 export class SocialLoginDone extends React.PureComponent {
@@ -29,9 +28,9 @@ export class SocialLoginDone extends React.PureComponent {
           <title>SocialLoginDone</title>
           <meta name="description" content="Description of SocialLoginDone" />
         </Helmet>
-        <Styles>
-          
-        </Styles>
+        <div style={{height: '100vh',paddingTop: '25vh',textAlign: 'center',cursor: 'default'}} >
+          <h1 style={{fontWeight: 'bold'}} >Loading please wait</h1>
+        </div>
       </div>
     );
   }
