@@ -31,3 +31,10 @@ export function setPost(payload) {
     payload,
   };
 }
+
+export function updatePost(payload) {
+  return {
+    type: c.UPDATE_POST,
+    payload,
+  };
+}
