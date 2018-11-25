@@ -101,7 +101,7 @@ export class ViewNews extends React.Component {
 
   handleSave = () => {
     const { id } = this.props.match.params;
-    delete this.state["commentField"];
+
 
     this.props.update(id, ...this.state);
   };
