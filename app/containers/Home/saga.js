@@ -6,7 +6,7 @@ import * as api from './api';
 export function* index() {
   try {
     const response = yield call(api.fetchPosts);
-    // yield put(a.setResponse({message: response));
+    yield put(a.setPosts(response.data));
   } catch (error) {
     yield put(a.setResponse(error.response));
   }
