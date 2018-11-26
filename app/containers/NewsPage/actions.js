@@ -11,15 +11,19 @@ export function defaultAction() {
     type: c.DEFAULT_ACTION,
   };
 }
-export function fetchPosts(payload) {
+export function fetchPosts() {
   return {
     type: c.FETCH_POSTS,
-    payload,
   };
 }
 export function setPosts(payload) {
   return {
     type: c.SET_POSTS,
     payload,
+  };
+}
+export function unmountRedux() {
+  return {
+    type: c.UNMOUNT_REDUX,
   };
 }

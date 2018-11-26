@@ -29,6 +29,12 @@ const GlobalStyle = createGlobalStyle`
     background: white;
     padding:20px;
   }
+  .danger-btn{
+    background:red;
+    color:white;
+    margin-top:20px;
+    border-color:red;
+  }
  textarea{
    border: 1px solid #eee;
    width: 100%;

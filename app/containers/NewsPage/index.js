@@ -25,6 +25,10 @@ export class NewsPage extends React.Component {
     this.props.fetchPost();
   }
 
+  componentWillMount() {
+    this.props.unmount();
+  }
+
   getBase64 = (img, callback) => {
     const reader = new FileReader();
     reader.addEventListener('load', () => callback(reader.result));
@@ -52,7 +56,6 @@ export class NewsPage extends React.Component {
           loading: false,
         }),
       );
-      console.log(this.state);
     }
   };
 
@@ -100,7 +103,7 @@ export class NewsPage extends React.Component {
                   rows="5"
                   id="bio"
                   style={{ width: '100%' }}
-                  value=" Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                  defaultValue=" Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                   Dolorem, ullam molestiae quod consequuntur nam, in cumque
                   debitis alias fugit, incidunt fuga quos excepturi. Non, nisi
                   ullam omnis labore vel praesentium. Lorem ipsum dolor sit,
@@ -120,7 +123,7 @@ export class NewsPage extends React.Component {
         <div className="container">
           <Row>
             {posts && posts.map(item =>{
-              return  <Col span={6}>
+              return  <Col span={6} key={Math.random()*10}>
               <Card
                 style={{ width: 350 }}
                 className="news-box"
@@ -135,13 +138,11 @@ export class NewsPage extends React.Component {
                   title={item.title}
                   description={item.main_sentence}
                 />
+                  <Button className="danger-btn">Deletes</Button>
               </Card>
             </Col>
             })}
-           
-           
           </Row>
-          
         </div>
       </div>
     );
@@ -157,7 +158,8 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    fetchPost: id => dispatch(a.fetchPosts(id)),
+    fetchPost: () => dispatch(a.fetchPosts()),
+    unmount: () => dispatch(a.unmountRedux()),
   };
 }
 

@@ -25,7 +25,8 @@ export function* fetchComments(action) {
     const response = yield call(api.commentsApi, action.payload);
     yield put(a.setPostComments(response.data));
   } catch (e) {
-    yield put(a.setPostComments(e.response.data));
+    throw e;
+    // yield put(a.setPostComments(e.response.data));
   }
 }
 
@@ -40,11 +41,13 @@ export function* update(action) {
 export default function* viewNewsSaga() {
   // See example in containers/HomePage/saga.js
   const post = yield takeLatest(c.VIEW_POST, view);
-  yield takeLatest(c.COMMENT_ON_POST, comment);
-  yield takeLatest(c.FETCH_POST_COMMENTS, fetchComments);
+  const post_comment = yield takeLatest(c.COMMENT_ON_POST, comment);
+  const fetch_post = yield takeLatest(c.FETCH_POST_COMMENTS, fetchComments);
   yield takeLatest(c.UPDATE_POST, update);
   yield takeLatest(c.UPDATE_POST, update);
 
   yield take(c.UNMOUNT_REDUX);
   yield cancel(post);
+  yield cancel(post_comment);
+  yield cancel(fetch_post);
 }

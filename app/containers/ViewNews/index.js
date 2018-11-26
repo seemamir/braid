@@ -255,7 +255,7 @@ export class ViewNews extends React.Component {
 
                 <Row>
                   <Col span={24}>
-                    {console.log(comments)}
+                    {/* {console.log(comments)} */}
                   </Col>
                 </Row>
                 <Row>
@@ -281,7 +281,7 @@ export class ViewNews extends React.Component {
                 </Row>
                 <Row>
                   <Col span={20}>
-                    {console.log(comments)}
+                    {/* {console.log(comments)} */}
                     {/* <ul>{comments && comments.map((item) => {
                       return <li>{item.comment}</li>})}</ul> */}
                   </Col>
