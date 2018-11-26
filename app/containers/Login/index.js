@@ -40,7 +40,7 @@ export class Login extends React.Component {
 
       if (response && response.status && response.status === 200) {
         localStorage.setItem('email', a.email);
-        this.props.history.push('/');
+        this.props.history.push('/home');
       }
     }, 1000);
   }
@@ -58,7 +58,7 @@ export class Login extends React.Component {
       if (response && response.status && response.status === 200) {
         this.props.form.validateFields((err, values) => {
           localStorage.setItem('email', values.email);
-          this.props.history.push('/');
+          this.props.history.push('/home');
         });
       }
     }, 1000);

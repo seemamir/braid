@@ -19,7 +19,7 @@ export class Signup extends React.Component {
     this.props.reset();
   }
   handleLogin = () => {
-    this.props.history.push(`/login`);
+    this.props.history.push(`/`);
   };
 
   handleSubmit = e => {
@@ -34,7 +34,7 @@ export class Signup extends React.Component {
       const { response } = this.props.signup;
       console.log(response)
       if (response && response.status && response.status === 201) {
-        this.props.history.push('/login');
+        this.props.history.push('/');
       }
     }, 1500);
   };
