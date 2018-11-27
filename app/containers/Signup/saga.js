@@ -4,7 +4,6 @@ import * as a from './actions';
 import * as api from './api';
 
 export function* create(action) {
-  console.log("hi");
   try {
     const { payload } = action;
     const data = {
@@ -12,10 +11,16 @@ export function* create(action) {
       ...payload,
     };
     const response = yield call(api.createAccountApi, data);
-    console.log(response);
-    yield put(a.setResponse(response.data));
+    yield put(
+      a.setResponse({ message: response.data, status: response.status }),
+    );
   } catch (error) {
-    yield put(a.setResponse(error.response.data));
+    yield put(
+      a.setResponse({
+        message: error.response.data,
+        status: error.response.status,
+      }),
+    );
   }
 }
 // Individual exports for testing

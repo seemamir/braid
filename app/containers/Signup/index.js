@@ -15,6 +15,9 @@ const FormItem = Form.Item;
 
 /* eslint-disable react/prefer-stateless-function */
 export class Signup extends React.Component {
+  componentDidMount(){
+    this.props.reset();
+  }
   handleLogin = () => {
     this.props.history.push(`/`);
   };
@@ -27,10 +30,33 @@ export class Signup extends React.Component {
         this.props.createAccount(values);
       }
     });
+    setTimeout(() => {
+      const { response } = this.props.signup;
+      console.log(response)
+      if (response && response.status && response.status === 201) {
+        this.props.history.push('/');
+      }
+    }, 1500);
+  };
+
+  handleErrors = () => {
+    const { response } = this.props.signup;
+    if (response && response.message && response.message.non_field_errors) {
+      return response.message.non_field_errors;
+    }
+    if (response && response.message && response.message.email) {
+      return response.message.email;
+    }
+    if (response && response.message && response.message.password1) {
+      return response.message.password1;
+    }
+    return 'Something went wrong';
   };
 
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { response } = this.props.signup;
+
     return (
       <div>
         <Helmet>
@@ -105,14 +131,17 @@ export class Signup extends React.Component {
                     />,
                   )}
                 </FormItem>
-                {/* {this.props.response &&
-                  this.props.response.status == 0 && (
+                {response &&
+                  response.status &&
+                  response.status !== 201 && (
                     <Alert
-                      message={this.props.response}
+                      message={
+                        this.handleErrors()
+                      }
                       type="error"
                       showIcon
                     />
-                  )} */}
+                  )}
                 <FormItem>
                   <Button
                     type="primary"
@@ -154,6 +183,7 @@ function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     createAccount: payload => dispatch(a.createAccount(payload)),
+    reset: () => dispatch(a.resetResponse()),
   };
 }
 

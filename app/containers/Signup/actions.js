@@ -20,9 +20,13 @@ export function createAccount(payload) {
 }
 
 export function setResponse(payload) {
-  console.log(payload)
   return {
     type: c.SET_RESPONSE,
     payload,
+  };
+}
+export function resetResponse() {
+  return {
+    type: c.RESET_RESPONSE,
   };
 }

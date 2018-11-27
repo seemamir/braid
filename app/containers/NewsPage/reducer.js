@@ -15,7 +15,7 @@ function newsPageReducer(state = initialState, action) {
   switch (action.type) {
     case c.DEFAULT_ACTION:
       return state;
-    case c.FETCH_POSTS:
+    case c.SET_POSTS:
       return state.set('posts', action.payload);
     default:
       return state;

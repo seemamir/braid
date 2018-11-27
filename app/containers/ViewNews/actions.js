@@ -52,3 +52,8 @@ export function updatePost(payload) {
     payload,
   };
 }
+export function unmountRedux() {
+  return {
+    type: c.UNMOUNT_REDUX,
+  };
+}

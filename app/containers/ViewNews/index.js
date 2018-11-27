@@ -74,7 +74,9 @@ export class ViewNews extends React.Component {
     this.props.viewPost(id);
     this.props.fetchPostComments(id);
   }
-
+  componentWillUnmount(){
+    this.props.unmount()
+  }
   handleRedirect = () => {
     this.props.history.push('/news-page');
   };
@@ -308,6 +310,7 @@ function mapDispatchToProps(dispatch) {
     comment: data => dispatch(a.comment(data)),
     update: (id, payload) => dispatch(a.updatePost(id, payload)),
     fetchPostComments: id => dispatch(a.fetchPostComments(id)),
+    unmount: () => dispatch(a.unmountRedux()),
   };
 }
 

@@ -28,7 +28,7 @@ export default function App() {
   return (
     <div>
       <Switch>
-        <Route path="/login" component={Login} />
+        <Route path="/home" component={Home} />
         <Route path="/news-page" component={NewsPage} />
         <Route path="/view/:id" component={ViewNews} />
         <Route path="/add-news" component={AddNews} />
@@ -36,7 +36,7 @@ export default function App() {
         <Route path="/reset-password" component={ResetPassword} />
         <Route path="/forget-password" component={ForgetPassword} />
         <Route path="/social-login-done" component={SocialLoginDone} />
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" component={Login} />
         <Route component={NotFoundPage} />
       </Switch>
       <Footer />

@@ -10,6 +10,7 @@ import makeSelectNewsPage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import Header from '../Headerr/Loadable';
+import * as a from './actions';
 const { Meta } = Card;
 /* eslint-disable react/prefer-stateless-function */
 export class NewsPage extends React.Component {
@@ -18,6 +19,10 @@ export class NewsPage extends React.Component {
     this.state = {
       loading: false,
     };
+  }
+
+  componentDidMount() {
+    this.props.fetchPost();
   }
 
   getBase64 = (img, callback) => {
@@ -58,6 +63,7 @@ export class NewsPage extends React.Component {
         <div className="ant-upload-text">Upload</div>
       </div>
     );
+    const { posts } = this.props.newsPage;
     return (
       <div>
         <Helmet>
@@ -113,145 +119,29 @@ export class NewsPage extends React.Component {
         </div>
         <div className="container">
           <Row>
-            <Col span={6}>
+            {posts && posts.map(item =>{
+              return  <Col span={6}>
               <Card
                 style={{ width: 350 }}
                 className="news-box"
                 cover={
                   <img
                     alt="example"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                    src={item.thumbnail_image}
                   />
                 }
               >
                 <Meta
-                  title="Card title"
-                  description="This is the description"
+                  title={item.title}
+                  description={item.main_sentence}
                 />
               </Card>
             </Col>
-            <Col span={6}>
-              <Card
-                style={{ width: 350 }}
-                className="news-box"
-                cover={
-                  <img
-                    alt="example"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                  />
-                }
-              >
-                <Meta
-                  title="Card title"
-                  description="This is the description"
-                />
-              </Card>
-            </Col>
-            <Col span={6}>
-              <Card
-                style={{ width: 350 }}
-                className="news-box"
-                cover={
-                  <img
-                    alt="example"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                  />
-                }
-              >
-                <Meta
-                  title="Card title"
-                  description="This is the description"
-                />
-              </Card>
-            </Col>
-            <Col span={6}>
-              <Card
-                style={{ width: 350 }}
-                className="news-box"
-                cover={
-                  <img
-                    alt="example"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                  />
-                }
-              >
-                <Meta
-                  title="Card title"
-                  description="This is the description"
-                />
-              </Card>
-            </Col>
+            })}
+           
+           
           </Row>
-          <Row>
-            <Col span={6}>
-              <Card
-                style={{ width: 350 }}
-                className="news-box"
-                cover={
-                  <img
-                    alt="example"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                  />
-                }
-              >
-                <Meta
-                  title="Card title"
-                  description="This is the description"
-                />
-              </Card>
-            </Col>
-            <Col span={6}>
-              <Card
-                style={{ width: 350 }}
-                className="news-box"
-                cover={
-                  <img
-                    alt="example"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                  />
-                }
-              >
-                <Meta
-                  title="Card title"
-                  description="This is the description"
-                />
-              </Card>
-            </Col>
-            <Col span={6}>
-              <Card
-                style={{ width: 350 }}
-                className="news-box"
-                cover={
-                  <img
-                    alt="example"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                  />
-                }
-              >
-                <Meta
-                  title="Card title"
-                  description="This is the description"
-                />
-              </Card>
-            </Col>
-            <Col span={6}>
-              <Card
-                style={{ width: 350 }}
-                className="news-box"
-                cover={
-                  <img
-                    alt="example"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                  />
-                }
-              >
-                <Meta
-                  title="Card title"
-                  description="This is the description"
-                />
-              </Card>
-            </Col>
-          </Row>
+          
         </div>
       </div>
     );
@@ -267,6 +157,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    fetchPost: id => dispatch(a.fetchPosts(id)),
   };
 }
 
