@@ -5,6 +5,7 @@ import { initialState } from './reducer';
  * Direct selector to the headerr state domain
  */
 
+
 const selectHeaderrDomain = state => state.get('headerr', initialState);
 
 /**

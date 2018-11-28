@@ -155,6 +155,7 @@ export class ViewNews extends React.Component {
 
   renderComments = () => {
     const { comments } = this.props.viewNews;
+    console.log(this.props);
     if (comments instanceof Array) {
       const commentsA = comments.map(c => <p>{c.comment}</p>);
       return <div>{commentsA}</div>;

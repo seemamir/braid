@@ -23,8 +23,10 @@ function appReducer(state = initialState, action) {
     case c.SET_EMAIL:
       return state.set('email', action.payload);
     case c.SET_USER:
+      localStorage.setItem('user',JSON.stringify(action.payload))
       return state.set('user', action.payload);
     case c.SET_PROFILE:
+      localStorage.setItem('profile',JSON.stringify(action.payload))
       return state.set('profile', action.payload);
     case c.LOGOUT_USER:
       clearState();

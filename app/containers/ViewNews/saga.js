@@ -24,7 +24,7 @@ export function* comment(action) {
 export function* fetchComments(action) {
   try {
     const response = yield call(api.commentsApi, action.payload);
-    // yield put(a.setPostComments(response.data));
+    yield put(a.setPostComments(response.data));
   } catch (e) {
     throw e;
     // yield put(a.setPostComments(e.response.data));

@@ -15,16 +15,50 @@ import { Layout, Avatar } from 'antd';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import makeSelectHeaderr from './selectors';
+import {selectGlobal} from "./../App/selectors"
+
 import reducer from './reducer';
 import saga from './saga';
 const { Header } = Layout;
+import {get} from "lodash";
 
 /* eslint-disable react/prefer-stateless-function */
 export class Headerr extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: ''
+    }
+  }
   handleRedirect = () => <Redirect to="/news-page" />;
   // this.props.history.push('/add-news');
-
+  componentDidMount() {
+    setInterval(() => {
+      let a = localStorage.getItem('user');
+      if (a) {
+        a = JSON.parse(a);
+        let u = get(a,'username','');
+        let username = (u.indexOf('@') > -1) ? u.split("@")[0] : '';
+        this.setState({
+          username: username
+        })
+      }
+    }, 1500);
+  }
   render() {
+    let avatar = <span></span>;
+    setTimeout(() => {
+      let a = localStorage.getItem('profile');
+      if (a) {
+        a = JSON.parse(a);
+        if (a) {
+          let image = get(a,'avatar','');
+          if (image) {
+            avatar = <Avatar src={image}  size="large"/>
+          }
+        }
+      }
+    },1000)
     return (
       <div>
         <Helmet>
@@ -35,11 +69,7 @@ export class Headerr extends React.Component {
           style={{ background: '#fff', padding: '0 20px', textAlign: 'right' }}
         >
           <div onClick={this.handleRedirect}>
-            <Avatar
-              src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-              size="large"
-            />
-            <strong>John Doe</strong>
+            <strong>{this.state.username}</strong>
           </div>
         </Header>
       </div>
@@ -53,6 +83,7 @@ Headerr.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   headerr: makeSelectHeaderr(),
+  // global: selectGlobal()
 });
 
 function mapDispatchToProps(dispatch) {
