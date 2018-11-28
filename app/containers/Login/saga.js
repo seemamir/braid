@@ -2,12 +2,10 @@ import { take, takeLatest, call, put, cancel } from 'redux-saga/effects';
 import * as c from './constants';
 import * as a from './actions';
 import * as api from './api';
-import { setEmail } from '../App/actions';
 import { createAccountApi } from '../Signup/api';
 export function* login(action) {
   try {
     const { payload } = action;
-    yield put(setEmail(payload.email));
     const response = yield call(api.loginApi, payload);
     yield put(
       a.setResponse({ message: response.data, status: response.status }),

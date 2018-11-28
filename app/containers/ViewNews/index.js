@@ -21,6 +21,8 @@ import reducer from './reducer';
 import saga from './saga';
 import Header from '../Headerr/Loadable';
 import * as a from './actions';
+import { setUserId } from '../App/actions';
+
 const Wrapper = styled.div`
   margin: 20px auto;
   text-align: center;
@@ -69,51 +71,53 @@ export class ViewNews extends React.Component {
       totalLikeReactions: 0,
       totalFunnyReactions: 0,
       totalSadReactions: 0,
-      totalAngryReactions: 0
+      totalAngryReactions: 0,
     };
   }
 
-  postReaction = (type) => {
-    let postId = parseInt(get(this,'props.match.params.id',null));
-    let userId = 1;
-    let data = {
+  postReaction = type => {
+    const postId = parseInt(get(this, 'props.match.params.id', null));
+    const userId = 1;
+    const data = {
       post: postId,
       user: userId,
-      reaction_type: type
-    }
+      reaction_type: type,
+    };
     this.props.setPostReaction(data);
     this.props.getPostReactions(postId);
     setTimeout(() => {
-      this.filterPostReactions()
+      this.filterPostReactions();
     }, 1500);
-  }
+  };
 
   filterPostReactions = () => {
-    let allReactions = get(this,'props.viewNews.postReactions',[]);
-    let likeReactions = allReactions.filter((c) => c.reaction_type == 'like')
-    this.setState({totalLikeReactions: likeReactions.length})
-    let funnyReactions = allReactions.filter((c) => c.reaction_type == 'funny')
-    this.setState({totalFunnyReactions: funnyReactions.length})
-    let sadReactions = allReactions.filter((c) => c.reaction_type == 'sad')
-    this.setState({totalSadReactions: sadReactions.length})
-    let angryReactions = allReactions.filter((c) => c.reaction_type == 'angry')
-    this.setState({totalAngryReactions: angryReactions.length})
-  }
+    const allReactions = get(this, 'props.viewNews.postReactions', []);
+    const likeReactions = allReactions.filter(c => c.reaction_type == 'like');
+    this.setState({ totalLikeReactions: likeReactions.length });
+    const funnyReactions = allReactions.filter(c => c.reaction_type == 'funny');
+    this.setState({ totalFunnyReactions: funnyReactions.length });
+    const sadReactions = allReactions.filter(c => c.reaction_type == 'sad');
+    this.setState({ totalSadReactions: sadReactions.length });
+    const angryReactions = allReactions.filter(c => c.reaction_type == 'angry');
+    this.setState({ totalAngryReactions: angryReactions.length });
+  };
 
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.viewPost(id);
     this.props.fetchPostComments(id);
     this.props.getPostReactions(id);
-    
+
     setTimeout(() => this.filterPostReactions(), 1000);
   }
-  componentWillUnmount(){
-    this.props.unmount()
+
+  componentWillUnmount() {
+    this.props.unmount();
   }
+
   handleRedirect = () => {
-    let id = get(this,'props.match.params.id',"");
-    this.props.setId(id)
+    const id = get(this, 'props.match.params.id', '');
+    this.props.setId(id);
     this.props.history.push('/news-page');
   };
 
@@ -130,9 +134,9 @@ export class ViewNews extends React.Component {
         user: 1,
       });
       this.setState({
-        commentField: ''
+        commentField: '',
       });
-      
+
       this.props.fetchPostComments(id);
     }
   };
@@ -149,17 +153,14 @@ export class ViewNews extends React.Component {
     this.props.update(id, ...this.state);
   };
 
-
   renderComments = () => {
     const { comments } = this.props.viewNews;
     if (comments instanceof Array) {
-      let commentsA =  comments.map((c) => {
-        return <p>{c.comment}</p>
-      })
-      return <div>{commentsA}</div>
+      const commentsA = comments.map(c => <p>{c.comment}</p>);
+      return <div>{commentsA}</div>;
     }
-    return <p></p>
-  }
+    return <p />;
+  };
 
   render() {
     const { post, comments } = this.props.viewNews;
@@ -250,7 +251,10 @@ export class ViewNews extends React.Component {
                   <Row>
                     <Col span={4} />
                     <Col span={4}>
-                      <div style={{cursor: 'pointer'}} onClick={ () => this.postReaction('like') } >
+                      <div
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => this.postReaction('like')}
+                      >
                         <p>{post.people4}</p>
                         <Icon
                           type="heart"
@@ -262,8 +266,10 @@ export class ViewNews extends React.Component {
                       </div>
                     </Col>
                     <Col span={4}>
-                    
-                      <div style={{cursor: 'pointer'}} onClick={ () => this.postReaction('funny') } >
+                      <div
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => this.postReaction('funny')}
+                      >
                         <p>{post.people2}</p>
                         <Icon
                           type="smile"
@@ -275,7 +281,10 @@ export class ViewNews extends React.Component {
                       </div>
                     </Col>
                     <Col span={4}>
-                      <div style={{cursor: 'pointer'}} onClick={ () => this.postReaction('sad') } >
+                      <div
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => this.postReaction('sad')}
+                      >
                         <p>{post.people3}</p>
                         <Icon
                           type="frown"
@@ -283,12 +292,15 @@ export class ViewNews extends React.Component {
                           style={{ fontSize: '50px', color: '#faad14' }}
                         />
                         <h4>Sad</h4>
-                        
+
                         <span>{this.state.totalSadReactions}</span>
                       </div>
                     </Col>
                     <Col span={4}>
-                      <div style={{cursor: 'pointer'}} onClick={ () => this.postReaction('angry') } >
+                      <div
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => this.postReaction('angry')}
+                      >
                         <p>{post.people4}</p>
                         <Icon
                           type="meh"
@@ -303,7 +315,6 @@ export class ViewNews extends React.Component {
                   <Row>
                     <Col span={20} offset={2}>
                       <img
-                        width="200"
                         height="200"
                         src={post.embedded_image}
                         alt="Embedded image"
@@ -318,9 +329,7 @@ export class ViewNews extends React.Component {
                 <h2 className="comment">Comments</h2>
 
                 <Row>
-                  <Col span={24}>
-                    {this.renderComments()}
-                  </Col>
+                  <Col span={24}>{this.renderComments()}</Col>
                 </Row>
                 <Row>
                   <Col span={20}>
@@ -375,9 +384,9 @@ function mapDispatchToProps(dispatch) {
     update: (id, payload) => dispatch(a.updatePost(id, payload)),
     fetchPostComments: id => dispatch(a.fetchPostComments(id)),
     unmount: () => dispatch(a.unmountRedux()),
-    setPostReaction: (data) => dispatch(a.setPostReaction(data)),
-    getPostReactions: (postID) => dispatch(a.getPostReactions(postID)),
-    setId: (id) => dispatch(a.setUserId(id)),
+    setPostReaction: data => dispatch(a.setPostReaction(data)),
+    getPostReactions: postID => dispatch(a.getPostReactions(postID)),
+    setId: id => dispatch(setUserId(id)),
   };
 }
 

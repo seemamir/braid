@@ -10,8 +10,11 @@ const initialState = fromJS({
   loggedInInfo: {},
   userId: '',
   email: '',
+<<<<<<< HEAD
   user: {},
   profile: {},
+=======
+>>>>>>> 5b3234d321a11afd9783827c7030a0ce56ce750d
 });
 
 function appReducer(state = initialState, action) {

@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Row, Col, Card, Upload, Icon, message, Button } from 'antd';
-import {get} from "lodash";
+import { get } from 'lodash';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import makeSelectNewsPage from './selectors';
@@ -24,6 +24,10 @@ export class NewsPage extends React.Component {
 
   componentDidMount() {
     this.props.fetchPost();
+  }
+
+  componentWillMount() {
+    this.props.unmount();
   }
 
   getBase64 = (img, callback) => {
@@ -53,40 +57,28 @@ export class NewsPage extends React.Component {
           loading: false,
         }),
       );
-      console.log(this.state);
     }
   };
-  renderPosts = () => {
-    let posts = get(this,'props.newsPage.posts',[]);
-    if(posts instanceof Array){
-      return posts.map((item,i)=>{
 
-      return  <Col span={6}>
-      <Card
-        style={{ width: 350 }}
-        className="news-box"
-        cover={
-          <img
-            alt="example"
-            src={item.thumbnail_image}
-          />
-        }
-      > 
-        <Meta
-          title={item.title}
-          description={item.main_sentence}
-        />
-        <button className="danger-btn">Delete</button>
-      </Card>
-    </Col>
-      })
+  renderPosts = () => {
+    const posts = get(this, 'props.newsPage.posts', []);
+    if (posts instanceof Array) {
+      return posts.map((item, i) => (
+        <Col span={6}>
+          <Card
+            style={{ width: 350 }}
+            className="news-box"
+            cover={<img alt="example" src={item.thumbnail_image} />}
+          >
+            <Meta title={item.title} description={item.main_sentence} />
+            <button className="danger-btn">Delete</button>
+          </Card>
+        </Col>
+      ));
     }
-   else{
-     return <Col>
-      No posts found
-     </Col>
-   }
-  }
+    return <Col>No posts found</Col>;
+  };
+
   render() {
     const uploadButton = (
       <div>
@@ -94,7 +86,7 @@ export class NewsPage extends React.Component {
         <div className="ant-upload-text">Upload</div>
       </div>
     );
-   
+
     return (
       <div>
         <Helmet>
@@ -149,9 +141,7 @@ export class NewsPage extends React.Component {
           </Row>
         </div>
         <div className="container">
-          <Row>
-            {this.renderPosts()}
-          </Row>
+          <Row>{this.renderPosts()}</Row>
         </div>
       </div>
     );
@@ -167,7 +157,8 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    fetchPost: id => dispatch(a.fetchPosts(id)),
+    fetchPost: () => dispatch(a.fetchPosts()),
+    unmount: () => dispatch(a.unmountRedux()),
   };
 }
 
