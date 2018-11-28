@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Row, Col, Card, Upload, Icon, message, Button } from 'antd';
+import {get} from "lodash";
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import makeSelectNewsPage from './selectors';
@@ -55,7 +56,37 @@ export class NewsPage extends React.Component {
       console.log(this.state);
     }
   };
+  renderPosts = () => {
+    let posts = get(this,'props.newsPage.posts',[]);
+    if(posts instanceof Array){
+      return posts.map((item,i)=>{
 
+      return  <Col span={6}>
+      <Card
+        style={{ width: 350 }}
+        className="news-box"
+        cover={
+          <img
+            alt="example"
+            src={item.thumbnail_image}
+          />
+        }
+      > 
+        <Meta
+          title={item.title}
+          description={item.main_sentence}
+        />
+        <button className="danger-btn">Delete</button>
+      </Card>
+    </Col>
+      })
+    }
+   else{
+     return <Col>
+      No posts found
+     </Col>
+   }
+  }
   render() {
     const uploadButton = (
       <div>
@@ -63,8 +94,7 @@ export class NewsPage extends React.Component {
         <div className="ant-upload-text">Upload</div>
       </div>
     );
-    const { posts } = this.props.newsPage;
-    console.log(posts)
+   
     return (
       <div>
         <Helmet>
@@ -120,29 +150,8 @@ export class NewsPage extends React.Component {
         </div>
         <div className="container">
           <Row>
-            {posts && posts.map((item, i) =>{
-              return  <Col span={6} key={i}>
-              <Card
-                style={{ width: 350 }}
-                className="news-box"
-                cover={
-                  <img
-                    alt="example"
-                    src={item.thumbnail_image}
-                  />
-                }
-              >
-                <Meta
-                  title={item.title}
-                  description={item.main_sentence}
-                />
-              </Card>
-            </Col>
-            })}
-           
-           
+            {this.renderPosts()}
           </Row>
-          
         </div>
       </div>
     );

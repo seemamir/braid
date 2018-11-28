@@ -10,7 +10,7 @@ import * as c from './constants';
 export const initialState = fromJS({
   post: {},
   comments: [],
-  postReactions: []
+  postReactions: [],
 });
 
 function viewNewsReducer(state = initialState, action) {
@@ -23,6 +23,7 @@ function viewNewsReducer(state = initialState, action) {
       return state.set('comments', action.payload);
     case c.SAVE_POST_REACTIONS:
       return state.set('postReactions', action.payload);
+
     default:
       return state;
   }

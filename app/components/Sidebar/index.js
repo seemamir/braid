@@ -10,12 +10,6 @@ class Sidebar extends React.Component {
         className="sidebar"
         breakpoint="lg"
         collapsedWidth="0"
-        onBreakpoint={broken => {
-          console.log(broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
         style={{ height: '100vh', paddingTop: '30px', position: 'fixed' }}
       >
         <div className="logo">
