@@ -27,8 +27,9 @@ export class NewsPage extends React.Component {
   }
 
   componentDidMount() {
-    const { user } = this.props.global;
-    this.props.fetchPost(user.id);
+    let userID = get(this,'props.global.user.id',null);
+    // const { user } = this.props.global;
+    this.props.fetchPost(userID);
     this.props.fetchProfile(user.id);
     console.log(this.props);
     setTimeout(() => {
