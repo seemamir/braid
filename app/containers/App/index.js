@@ -25,19 +25,20 @@ import { compose } from 'redux';
 import ForgetPassword from 'containers/ForgetPassword/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import { createStructuredSelector } from 'reselect';
-import reducer from './reducer';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+import reducer from './reducer';
 import saga from './saga';
-import * as a from "./actions.js"
+import * as a from './actions';
+// import { selectGlobal } from './selectors';
 
 import GlobalStyle from '../../global-styles';
 
 export class App extends React.Component {
   componentDidMount() {
-    console.log(a);
-    // this.props.fetchUser(window.localStorage.getItem('email'))
+    this.props.fetchUser(window.localStorage.getItem('email'));
   }
+
   render() {
     return (
       <div>
@@ -60,10 +61,8 @@ export class App extends React.Component {
   }
 }
 
-
-
 const mapStateToProps = createStructuredSelector({
-  // login: makeSelectLogin(),
+  // app: selectGlobal(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -73,15 +72,13 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-
-const withReducer = injectReducer({ key: 'login', reducer });
-const withSaga = injectSaga({ key: 'login', saga });
+const withReducer = injectReducer({ key: 'app', reducer });
+const withSaga = injectSaga({ key: 'app', saga });
 
 const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
 );
-
 
 export default compose(
   withReducer,

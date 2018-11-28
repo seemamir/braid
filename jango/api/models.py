@@ -28,8 +28,8 @@ class Post(models.Model):
 
 class Profile(models.Model):
   user = models.ForeignKey(User,on_delete=models.CASCADE,unique=True)
-  bio = models.TextField()
-  image = models.TextField()
+  bio = models.TextField(blank=True)
+  image = models.TextField(blank=True)
 
 class PostReaction(models.Model):
   post = models.ForeignKey('api.Post',on_delete=models.CASCADE)
