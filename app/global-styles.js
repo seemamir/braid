@@ -48,6 +48,13 @@ const GlobalStyle = createGlobalStyle`
   p { 
     color: #999
   }
+  .comments{
+    text-align:left;
+    p{
+      color: #555;
+      margin: 15px 0 !important;
+    }
+  }
   .ant-alert{
     margin-bottom: 30px;
   }
