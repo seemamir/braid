@@ -6,33 +6,37 @@ import {get} from "lodash";
 
 export function* fetchUser(action) {
   try {
-    // const { email } = yield select(makeSelectNewsPage());
-    const response = yield call(api.fetchUser, action.payload);
-    let data = get(response,'data',[]);
-    // yield put(a.loggedInAction(response.data));
-    if (data.length > 0) {
-      let user = data[0];
-      delete user['password'];
-      yield put(
-        a.setUser(user)
-        );
-      // fetch profile
-      let userProfile = {};
-      const profile = yield call(api.fetchProfile, user.id);
-      let profileData = get(profile,'data',[]);
-      if (profileData.length == 0) {
-        // Create
-        const create = yield call(api.createProfile,{user: user.id,image: '',bio: ''});
-        userProfile = create.data;
+    let email = localStorage.getItem('email');
+    if (email) {
+      // const { email } = yield select(makeSelectNewsPage());
+      const response = yield call(api.fetchUser, action.payload);
+      let data = get(response,'data',[]);
+      // yield put(a.loggedInAction(response.data));
+      if (data.length > 0) {
+        let user = data[0];
+        delete user['password'];
         yield put(
-          a.setProfile(userProfile)
-        )
-      }else {
-        userProfile = profileData[0];
-        yield put(
-          a.setProfile(userProfile)
-        )
+          a.setUser(user)
+          );
+        // fetch profile
+        let userProfile = {};
+        const profile = yield call(api.fetchProfile, user.id);
+        let profileData = get(profile,'data',[]);
+        if (profileData.length == 0) {
+          // Create
+          const create = yield call(api.createProfile,{user: user.id,image: '',bio: ''});
+          userProfile = create.data;
+          yield put(
+            a.setProfile(userProfile)
+          )
+        }else {
+          userProfile = profileData[0];
+          yield put(
+            a.setProfile(userProfile)
+          )
+        }
       }
+      
     }
   } catch (error) {}
 }
