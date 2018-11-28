@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
 # Create your models here.
 class Post(models.Model):
   title = models.CharField(max_length=250)
@@ -10,11 +9,11 @@ class Post(models.Model):
   category = models.CharField(max_length=250)
   source = models.CharField(max_length=250)
   author_description = models.TextField(blank=True)
-  main_sentence = models.TextField()
+  main_sentence = models.TextField(blank=True)
   sentence2 = models.TextField(blank=True)
   sentence3 = models.TextField(blank=True)
   sentence4 = models.TextField(blank=True)
-  people1 = models.TextField()
+  people1 = models.TextField(blank=True)
   people2 = models.TextField(blank=True)
   people3 = models.TextField(blank=True)
   people4 = models.TextField(blank=True)
@@ -30,6 +29,9 @@ class Profile(models.Model):
   user = models.ForeignKey(User,on_delete=models.CASCADE,unique=True)
   bio = models.TextField(blank=True)
   image = models.TextField(blank=True)
+  
+  def __str__(self):
+    return "Post reaction"
 
 class PostReaction(models.Model):
   post = models.ForeignKey('api.Post',on_delete=models.CASCADE)
