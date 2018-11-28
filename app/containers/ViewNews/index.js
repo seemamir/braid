@@ -302,7 +302,7 @@ export class ViewNews extends React.Component {
 
                 <Row>
                   <Col span={24}>
-                    {/* {console.log(comments)} */}
+                    {comments.map((c) => console.log(c))}
                   </Col>
                 </Row>
                 <Row>

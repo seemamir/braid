@@ -2,6 +2,12 @@ from .models import Post,PostReaction,SavedPost, Comment, Profile
 from rest_framework import routers, serializers, viewsets
 from django.contrib.auth.models import User
 
+
+class UserSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = User
+    fields = "__all__"
+
 class PostSerializer(serializers.ModelSerializer):
   class Meta:
     model = Post
@@ -13,12 +19,15 @@ class ProfileSerializer(serializers.ModelSerializer):
     fields = "__all__"
 
 class PostReactionSerializer(serializers.ModelSerializer):
+  # user = UserSerializer(many=False, read_only=False)
   class Meta:
     model = PostReaction
     fields = "__all__"
 
 
 class SavedPostSerializer(serializers.ModelSerializer):
+  post = PostSerializer(many=False, read_only=False)
+  
   class Meta:
     model = SavedPost
     fields = "__all__"
@@ -28,10 +37,6 @@ class CommentSerializer(serializers.ModelSerializer):
     model = Comment
     fields = "__all__"
 
-class UserSerializer(serializers.ModelSerializer):
-  class Meta:
-    model = User
-    fields = "__all__"
 
   def create(self, validated_data):
     user = User.objects.create(
