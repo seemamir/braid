@@ -40,6 +40,11 @@ const GlobalStyle = createGlobalStyle`
    width: 100%;
    padding: 8px
  }
+ .danger-btn{
+   background:red;
+   color:white;
+   margin-top:20px;
+ }
   p { 
     color: #999
   }

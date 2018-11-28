@@ -6,9 +6,29 @@ export function loggedInAction(payload) {
     payload,
   };
 }
-export function setEmail(payload) {
+
+export function fetchProfile(payload) {
   return {
-    type: c.SET_EMAIL,
+    type: c.FETCH_PROFILE,
     payload,
+  };
+}
+export function createProfile(payload) {
+  return {
+    type: c.CREATE_PROFILE,
+    payload,
+  };
+}
+export function updateProfile(payload) {
+  return {
+    type: c.UPDATE_PROFILE,
+    payload,
+  };
+}
+
+export function setUserId(id) {
+  return {
+    type: c.SET_USER_ID,
+    id,
   };
 }

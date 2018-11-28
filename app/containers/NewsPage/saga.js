@@ -5,7 +5,7 @@ import * as c from './constants';
 export function* index(action) {
   try {
     const { id } = action;
-    const response = yield call(api.fetchPostsApi);
+    const response = yield call(api.fectSavedPosts);
     yield put(a.setPosts(response.data));
   } catch (error) {}
 }
