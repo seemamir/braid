@@ -9,17 +9,11 @@ export function loggedInAction(payload) {
 
 export function fetchUser(payload) {
   return {
-    type: c.FETCH_PROFILE,
+    type: c.FETCH_USER,
     payload,
   };
 }
 
-export function fetchProfile(payload) {
-  return {
-    type: c.FETCH_PROFILE,
-    payload,
-  };
-}
 export function createProfile(payload) {
   return {
     type: c.CREATE_PROFILE,

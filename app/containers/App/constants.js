@@ -1,6 +1,6 @@
 export const LOGGED_IN_USER = 'BRAID/App/LOGGED_IN_USER';
 export const LOGOUT_USER = 'BRAID/App/LOGOUT_USER';
-export const FETCH_PROFILE = 'BRAID/App/FETCH_PROFILE';
+export const FETCH_USER = 'BRAID/App/FETCH_USER';
 export const SET_PROFILE = 'BRAID/App/SET_PROFILE';
 export const SET_USER = 'BRAID/App/SET_USER';
 export const LOAD_USER = 'BRAID/App/LOAD_USER';
