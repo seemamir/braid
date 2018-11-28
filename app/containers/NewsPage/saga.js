@@ -14,6 +14,7 @@ export function* index(action) {
 export function* updateProfile(action) {
   try {
     const res = yield call(api.updateProfile, action.payload);
+    console.log(res);
   } catch (e) {
     console.log(e.message);
   }
@@ -32,9 +33,7 @@ export function* fetchProfile(action) {
 // Individual exports for testing
 export default function* newsPageSaga() {
   // See example in containers/HomePage/saga.js
-  const fetch = yield takeLatest(c.FETCH_POSTS, index);
+  yield takeLatest(c.FETCH_POSTS, index);
   yield takeLatest(c.UPDATE_PROFILE, updateProfile);
   yield takeLatest(c.FETCH_PROFILE, fetchProfile);
-  // yield take(c.UNMOUNT_REDUX);
-  // yield cancel(fetch);
 }

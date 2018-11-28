@@ -21,7 +21,7 @@ import reducer from './reducer';
 import saga from './saga';
 import Header from '../Headerr/Loadable';
 import * as a from './actions';
-
+import makeSelectGlobalState from '../App/selectors';
 const Wrapper = styled.div`
   margin: 20px auto;
   text-align: center;
@@ -75,8 +75,9 @@ export class ViewNews extends React.Component {
   }
 
   postReaction = type => {
+    const {id} = this.props.globalState.user;
     const postId = parseInt(get(this, 'props.match.params.id', null));
-    const userId = 1;
+    const userId = id;
     const data = {
       post: postId,
       user: userId,
@@ -372,6 +373,7 @@ ViewNews.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   viewNews: makeSelectViewNews(),
+  globalState: makeSelectGlobalState(),
 });
 
 function mapDispatchToProps(dispatch) {

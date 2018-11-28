@@ -14,6 +14,7 @@ import saga from './saga';
 import Header from '../Headerr/Loadable';
 import * as a from './actions';
 const { Meta } = Card;
+
 /* eslint-disable react/prefer-stateless-function */
 export class NewsPage extends React.Component {
   constructor(props) {
@@ -26,24 +27,20 @@ export class NewsPage extends React.Component {
   }
 
   componentDidMount() {
-    let user = window.localStorage.getItem('user') || '{}';
-    user = JSON.parse(user);
-    console.log(user);
+    const { user } = this.props.global;
     this.props.fetchPost(user.id);
-    this.props.fetchProfile(user.email);
-    console.log(this.props.newsPage);
+    this.props.fetchProfile(user.id);
     setTimeout(() => {
       this.setState({
         imageUrl: get(this.props, 'newsPage.profile.image', ''),
         bio: get(this.props, 'newsPage.profile.bio', ''),
       });
-      console.log(this.state);
     }, 1500);
   }
 
-  componentWillMount() {
-    this.props.unmount();
-  }
+  // componentWillMount() {
+  //   this.props.unmount();
+  // }
 
   getBase64 = (img, callback) => {
     const reader = new FileReader();
@@ -124,8 +121,7 @@ export class NewsPage extends React.Component {
   };
 
   render() {
-    console.log(this.props)
-    let image = <span></span>
+    let image = <span />;
     if (this.state.imageUrl) {
       image = (
         <img
@@ -176,7 +172,6 @@ export class NewsPage extends React.Component {
                   name="bio"
                   rows="5"
                   id="bio"
-                  value={this.state.bio}
                   onChange={e => this.setState({ bio: e.target.value })}
                   style={{ width: '100%' }}
                   defaultValue={this.state.bio}
