@@ -112,6 +112,8 @@ export class ViewNews extends React.Component {
     this.props.unmount()
   }
   handleRedirect = () => {
+    let id = get(this,'props.match.params.id',"");
+    this.props.setId(id)
     this.props.history.push('/news-page');
   };
 
@@ -359,6 +361,7 @@ function mapDispatchToProps(dispatch) {
     unmount: () => dispatch(a.unmountRedux()),
     setPostReaction: (data) => dispatch(a.setPostReaction(data)),
     getPostReactions: (postID) => dispatch(a.getPostReactions(postID)),
+    setId: (id) => dispatch(a.setUserId(id)),
   };
 }
 

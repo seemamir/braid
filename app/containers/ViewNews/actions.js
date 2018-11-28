@@ -73,6 +73,12 @@ export function updatePost(payload) {
     payload,
   };
 }
+export function setUserId(id) {
+  return {
+    type: c.SET_USER_ID,
+    id,
+  };
+}
 export function unmountRedux() {
   return {
     type: c.UNMOUNT_REDUX,

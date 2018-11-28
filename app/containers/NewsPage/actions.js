@@ -17,6 +17,7 @@ export function fetchPosts(payload) {
     payload,
   };
 }
+
 export function setPosts(payload) {
   return {
     type: c.SET_POSTS,
