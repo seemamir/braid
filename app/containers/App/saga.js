@@ -24,12 +24,15 @@ export function* fetchUser(action) {
         // Create
         const create = yield call(api.createProfile,{user: user.id,image: '',bio: ''});
         userProfile = create.data;
+        yield put(
+          a.setProfile(userProfile)
+        )
       }else {
         userProfile = profileData[0];
+        yield put(
+          a.setProfile(userProfile)
+        )
       }
-      yield put(
-        a.setProfile(userProfile)
-      )
     }
   } catch (error) {}
 }
