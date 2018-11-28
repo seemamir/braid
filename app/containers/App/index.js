@@ -8,7 +8,7 @@
  */
 
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import 'antd/dist/antd.css';
 
 import { connect } from 'react-redux';
@@ -37,26 +37,29 @@ import GlobalStyle from '../../global-styles';
 export class App extends React.Component {
   componentDidMount() {
     this.props.fetchUser(window.localStorage.getItem('email'));
+    console.log(this.props)
   }
 
   render() {
     return (
-      <div>
-        <Switch>
-          <Route path="/home" component={Home} />
-          <Route path="/news-page" component={NewsPage} />
-          <Route path="/view/:id" component={ViewNews} />
-          <Route path="/add-news" component={AddNews} />
-          <Route path="/signup" component={Signup} />
-          <Route path="/reset-password" component={ResetPassword} />
-          <Route path="/forget-password" component={ForgetPassword} />
-          <Route path="/social-login-done" component={SocialLoginDone} />
-          <Route exact path="/" component={Login} />
-          <Route component={NotFoundPage} />
-        </Switch>
-        <Footer />
-        <GlobalStyle />
-      </div>
+      <BrowserRouter>
+        <div>
+          <Switch>
+            <Route path="/view/:id" component={ViewNews} />
+            <Route path="/home" component={Home} />
+            <Route path="/news-page" component={NewsPage} />
+            <Route path="/add-news" component={AddNews} />
+            <Route path="/signup" component={Signup} />
+            <Route path="/reset-password" component={ResetPassword} />
+            <Route path="/forget-password" component={ForgetPassword} />
+            <Route path="/social-login-done" component={SocialLoginDone} />
+            <Route path="/" component={Login} />
+            <Route component={NotFoundPage} />
+          </Switch>
+          <Footer />
+          <GlobalStyle />
+        </div>
+      </BrowserRouter>
     );
   }
 }
