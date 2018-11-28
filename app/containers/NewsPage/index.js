@@ -14,6 +14,7 @@ import saga from './saga';
 import Header from '../Headerr/Loadable';
 import * as a from './actions';
 const { Meta } = Card;
+
 /* eslint-disable react/prefer-stateless-function */
 export class NewsPage extends React.Component {
   constructor(props) {
@@ -26,25 +27,20 @@ export class NewsPage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchPost();
-    let user = window.localStorage.getItem('user') || '{}';
-    user = JSON.parse(user);
-    this.props.fetchProfile({userID: user.id});
-    console.log(this.props.newsPage);
+    const { user } = this.props.global;
+    this.props.fetchPost(user.id);
+    this.props.fetchProfile(user.id);
     setTimeout(() => {
-      console.log(this.props.newsPage.profile)
       this.setState({
-        imageUrl: get(this.props,'newsPage.profile.image',''),
-        bio: get(this.props,'newsPage.profile.bio','')
+        imageUrl: get(this.props, 'newsPage.profile.image', ''),
+        bio: get(this.props, 'newsPage.profile.bio', ''),
       });
-      console.log(this.state);
     }, 1500);
-    
   }
 
-  componentWillMount() {
-    this.props.unmount();
-  }
+  // componentWillMount() {
+  //   this.props.unmount();
+  // }
 
   getBase64 = (img, callback) => {
     const reader = new FileReader();
@@ -83,13 +79,15 @@ export class NewsPage extends React.Component {
     this.props.updateProfile({
       id: profile.id,
       image: this.state.imageUrl,
-      bio: this.state.bio
+      bio: this.state.bio,
     });
-  }
-  handleFileUpload = (e,attribute) => {
+  };
+
+  handleFileUpload = (e, attribute) => {
     e.persist();
     this.getBase64(e.target.files[0], attribute);
-  }
+  };
+
   getBase64 = (file, attribute) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -123,17 +121,21 @@ export class NewsPage extends React.Component {
   };
 
   render() {
-    console.log(this.props)
-    let image = <span></span>
+    let image = <span />;
     if (this.state.imageUrl) {
-      image = <img style={{
-        'height': '119px',
-        'width': '110px',
-        'display': 'block',
-        'margin': 'auto',
-        'marginBottom': '20px',
-        'borderRadius': '50%',
-      }} src={this.state.imageUrl} />
+      image = (
+        <img
+          style={{
+            height: '119px',
+            width: '110px',
+            display: 'block',
+            margin: 'auto',
+            marginBottom: '20px',
+            borderRadius: '50%',
+          }}
+          src={this.state.imageUrl}
+        />
+      );
     }
     return (
       <div>
@@ -146,26 +148,22 @@ export class NewsPage extends React.Component {
           <Row>
             <Col span={6}>
               <Card style={{ marginRight: '20px', textAlign: 'center' }}>
-              <div>
-                {image}
-                <input
-                  style={{ display: 'none' }}
-                  className="one-upload-thumbnail"
-                  onChange={e =>
-                    this.handleFileUpload(e, 'imageUrl')
-                  }
-                  type="file"
-                />
-                <Button
-                  onClick={() =>
-                    document
-                      .querySelector('.one-upload-thumbnail')
-                      .click()
-                  }
-                >
-                  Upload Photo
-                </Button>
-              </div>
+                <div>
+                  {image}
+                  <input
+                    style={{ display: 'none' }}
+                    className="one-upload-thumbnail"
+                    onChange={e => this.handleFileUpload(e, 'imageUrl')}
+                    type="file"
+                  />
+                  <Button
+                    onClick={() =>
+                      document.querySelector('.one-upload-thumbnail').click()
+                    }
+                  >
+                    Upload Photo
+                  </Button>
+                </div>
               </Card>
             </Col>
             <Col span={14}>
@@ -174,14 +172,17 @@ export class NewsPage extends React.Component {
                   name="bio"
                   rows="5"
                   id="bio"
-                  value={this.state.bio}
-                  onChange={(e) => this.setState({bio: e.target.value}) }
+                  onChange={e => this.setState({ bio: e.target.value })}
                   style={{ width: '100%' }}
                   defaultValue={this.state.bio}
                   placeholder="Enter your bio"
                 />
               </Card>
-              <Button onClick={()=>this.saveProfile()} type="primary" style={{ marginTop: '20px' }}>
+              <Button
+                onClick={() => this.saveProfile()}
+                type="primary"
+                style={{ marginTop: '20px' }}
+              >
                 Save
               </Button>
             </Col>
@@ -205,10 +206,10 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    fetchPost: () => dispatch(a.fetchPosts()),
+    fetchPost: id => dispatch(a.fetchPosts(id)),
     unmount: () => dispatch(a.unmountRedux()),
-    updateProfile: (data) => dispatch(a.updateProfile(data)),
-    fetchProfile: (data) => dispatch(a.fetchProfile(data))
+    updateProfile: data => dispatch(a.updateProfile(data)),
+    fetchProfile: data => dispatch(a.fetchProfile(data)),
   };
 }
 
