@@ -14,6 +14,7 @@ import reducer from './reducer';
 import saga from './saga';
 import SocialIcon from '../../components/SocialIcon/Loadable';
 import * as a from './actions';
+import {setEmail} from "../App/actions"
 const FormItem = Form.Item;
 /* eslint-disable react/prefer-stateless-function */
 export class Login extends React.Component {
@@ -37,6 +38,7 @@ export class Login extends React.Component {
       const { response } = this.props.login;
 
       if (response && response.status && response.status === 200) {
+
         localStorage.setItem('email', a.email);
         this.props.history.push('/home');
       }
@@ -57,6 +59,7 @@ export class Login extends React.Component {
         this.props.form.validateFields((err, values) => {
           localStorage.setItem('email', values.email);
           this.props.history.push('/home');
+          this.props.setEmail(values.email);
         });
       }
     }, 1000);
@@ -327,6 +330,7 @@ function mapDispatchToProps(dispatch) {
     unmount: payload => dispatch(a.unmountRedux(payload)),
     reset: () => dispatch(a.resetResponse()),
     createAccount: payload => dispatch(a.createAccount(payload)),
+    setEmail: payload => dispatch(setEmail(payload)),
   };
 }
 

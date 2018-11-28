@@ -10,7 +10,6 @@ const selectRoute = state => state.get('route');
 
 const makeSelectEmail = () => {
   const email = globalState => globalState.get('email');
-  console.log(globalState);
   return email;
 };
 

@@ -33,3 +33,9 @@ export function setUserId(id) {
     id,
   };
 }
+export function setEmail(payload) {
+  return {
+    type: c.SET_EMAIL,
+    payload,
+  };
+}

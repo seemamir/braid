@@ -8,3 +8,4 @@ export const LOAD_PROFILE = 'BRAID/App/LOAD_PROFILE';
 export const CREATE_PROFILE = 'BRAID/App/CREATE_PROFILE';
 export const UPDATE_PROFILE = 'BRAID/App/UPDATE_PROFILE';
 export const SET_USER_ID = 'BRAID/App/SET_USER_ID';
+export const SET_EMAIL = 'BRAID/App/SET_EMAIL';

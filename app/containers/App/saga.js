@@ -5,8 +5,9 @@ import * as api from './api';
 
 export function* fetchUser() {
   try {
-    const { email } = yield select(makeSelectNewsPage());
-    const response = yield call(api.fetchUser(email));
+    console.log('seemair13@gmail');
+    // const { email } = yield select(makeSelectNewsPage());
+    const response = yield call(api.fetchUser, 'seema@gmail');
     console.log(response);
     yield put(a.loggedInAction(response.data));
   } catch (error) {}
