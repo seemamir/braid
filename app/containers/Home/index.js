@@ -42,7 +42,7 @@ export class Home extends React.Component {
           <meta name="description" content="Description of Home" />
         </Helmet>
         <Layout>
-          <Sidebar />
+          <Sidebar filter={this.filter} />
           <Layout style={{ marginLeft: '200px' }}>
             <Header />
             <Content className="content">
