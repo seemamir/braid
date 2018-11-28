@@ -30,11 +30,13 @@ export class NewsPage extends React.Component {
     const { user } = this.props.global;
     this.props.fetchPost(user.id);
     this.props.fetchProfile(user.id);
+    console.log(this.props);
     setTimeout(() => {
       this.setState({
-        imageUrl: get(this.props, 'newsPage.profile.image', ''),
-        bio: get(this.props, 'newsPage.profile.bio', ''),
+        imageUrl: get(this.props, 'global.profile.image', ''),
+        bio: get(this.props, 'global.profile.bio', ''),
       });
+      console.log(this.state);
     }, 1500);
   }
 
@@ -171,6 +173,7 @@ export class NewsPage extends React.Component {
                 <textarea
                   name="bio"
                   rows="5"
+                  value={this.state.bio}
                   id="bio"
                   onChange={e => this.setState({ bio: e.target.value })}
                   style={{ width: '100%' }}

@@ -7,4 +7,4 @@ export const deletePostApi = id => axios.delete(`/api/post/${id}/`);
 export const updateProfile = data =>
   axios.patch(`/api/user-profile/${data.id}/`, data);
 export const fetchProfile = userID =>
-  axios.get(`/api/user-profile?email=${userID}`);
+  axios.get(`/api/user-profile?user=${userID}&limit=1`);
