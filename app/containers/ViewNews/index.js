@@ -116,6 +116,7 @@ export class ViewNews extends React.Component {
   };
 
   publishComment = () => {
+    const { id } = this.props.match.params;
     const {
       state: { commentField },
     } = this;
@@ -128,7 +129,9 @@ export class ViewNews extends React.Component {
       });
       this.setState({
         commentField: ''
-      })
+      });
+      
+      this.props.fetchPostComments(id);
     }
   };
 
@@ -143,6 +146,18 @@ export class ViewNews extends React.Component {
     const { id } = this.props.match.params;
     this.props.update(id, ...this.state);
   };
+
+
+  renderComments = () => {
+    const { comments } = this.props.viewNews;
+    if (comments instanceof Array) {
+      let commentsA =  comments.map((c) => {
+        return <p>{c.comment}</p>
+      })
+      return <div>{commentsA}</div>
+    }
+    return <p></p>
+  }
 
   render() {
     const { post, comments } = this.props.viewNews;
@@ -302,7 +317,7 @@ export class ViewNews extends React.Component {
 
                 <Row>
                   <Col span={24}>
-                    {comments.map((c) => console.log(c))}
+                    {this.renderComments()}
                   </Col>
                 </Row>
                 <Row>
@@ -310,6 +325,7 @@ export class ViewNews extends React.Component {
                     <textarea
                       name="comment"
                       rows="3"
+                      value={this.state.commentField}
                       onChange={e =>
                         this.setState({ commentField: e.target.value })
                       }

@@ -10,6 +10,8 @@ export function* fetchUser() {
     yield put(a.userInfo(response.data));
   } catch (error) {}
 }
+
+
 // Individual exports for testing
 export default function* homeSaga() {
   // See example in containers/HomePage/saga.js
