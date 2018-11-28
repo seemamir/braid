@@ -32,6 +32,27 @@ export function fetchPostComments(payload) {
   };
 }
 
+export function setPostReaction(payload) {
+  return {
+    type: c.SET_POST_REACTION,
+    payload,
+  };
+}
+
+export function getPostReactions(payload) {
+  return {
+    type: c.GET_POST_REACTIONS,
+    payload,
+  };
+}
+
+export function savePostReactions(payload) {
+  return {
+    type: c.SAVE_POST_REACTIONS,
+    payload,
+  };
+}
+
 export function setPost(payload) {
   return {
     type: c.SET_POST,

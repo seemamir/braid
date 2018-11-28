@@ -31,9 +31,7 @@ export class Login extends React.Component {
 
   prepareLogin(a) {
     a.username = a.email;
-    a.password1 = 'socialpassword/12345';
-    a.password2 = 'socialpassword/12345';
-    a.password = 'socialpassword/12345';
+    a.password1 = a.password2 = a.password = 'socialpassword/12345';
     this.props.createAccount(a);
     setTimeout(() => {
       const { response } = this.props.login;

@@ -64,6 +64,7 @@ export class NewsPage extends React.Component {
       </div>
     );
     const { posts } = this.props.newsPage;
+    console.log(posts)
     return (
       <div>
         <Helmet>

@@ -66,13 +66,47 @@ export class ViewNews extends React.Component {
       sentence3: post.sentence3 ? post.sentence3 : '',
       sentence4: post.sentence4 ? post.sentence4 : '',
       main_sentence: post.main_sentence ? post.main_sentence : '',
+      totalLikeReactions: 0,
+      totalFunnyReactions: 0,
+      totalSadReactions: 0,
+      totalAngryReactions: 0
     };
+  }
+
+  postReaction = (type) => {
+    let postId = parseInt(get(this,'props.match.params.id',null));
+    let userId = 1;
+    let data = {
+      post: postId,
+      user: userId,
+      reaction_type: type
+    }
+    this.props.setPostReaction(data);
+    this.props.getPostReactions(postId);
+    setTimeout(() => {
+      this.filterPostReactions()
+    }, 1500);
+  }
+
+  filterPostReactions = () => {
+    let allReactions = get(this,'props.viewNews.postReactions',[]);
+    let likeReactions = allReactions.filter((c) => c.reaction_type == 'like')
+    this.setState({totalLikeReactions: likeReactions.length})
+    let funnyReactions = allReactions.filter((c) => c.reaction_type == 'funny')
+    this.setState({totalFunnyReactions: funnyReactions.length})
+    let sadReactions = allReactions.filter((c) => c.reaction_type == 'sad')
+    this.setState({totalSadReactions: sadReactions.length})
+    let angryReactions = allReactions.filter((c) => c.reaction_type == 'angry')
+    this.setState({totalAngryReactions: angryReactions.length})
   }
 
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.viewPost(id);
     this.props.fetchPostComments(id);
+    this.props.getPostReactions(id);
+    
+    // setTimeout(() => this.filterPostReactions(), 1000);
   }
   componentWillUnmount(){
     this.props.unmount()
@@ -92,6 +126,9 @@ export class ViewNews extends React.Component {
         post: parseInt(get(this, 'props.match.params.id', null)),
         user: 1,
       });
+      this.setState({
+        commentField: ''
+      })
     }
   };
 
@@ -196,44 +233,54 @@ export class ViewNews extends React.Component {
                   <Row>
                     <Col span={4} />
                     <Col span={4}>
-                      <p>{post.people1}</p>
-                      <Icon
-                        type="heart"
-                        theme="filled"
-                        style={{ fontSize: '50px', color: 'red' }}
-                      />
-                      <h4>Like</h4>
-                      <span>11</span>
+                      <div style={{cursor: 'pointer'}} onClick={ () => this.postReaction('like') } >
+                        <p>{post.people4}</p>
+                        <Icon
+                          type="heart"
+                          theme="filled"
+                          style={{ fontSize: '50px', color: 'red' }}
+                        />
+                        <h4>Like</h4>
+                        <span>{this.state.totalLikeReactions}</span>
+                      </div>
                     </Col>
                     <Col span={4}>
-                      <p>{post.people2}</p>
-                      <Icon
-                        type="smile"
-                        theme="filled"
-                        style={{ fontSize: '50px', color: '#faad14' }}
-                      />
-                      <h4>Funny</h4>
-                      <span>1</span>
+                    
+                      <div style={{cursor: 'pointer'}} onClick={ () => this.postReaction('funny') } >
+                        <p>{post.people2}</p>
+                        <Icon
+                          type="smile"
+                          theme="filled"
+                          style={{ fontSize: '50px', color: '#faad14' }}
+                        />
+                        <h4>Funny</h4>
+                        <span>{this.state.totalFunnyReactions}</span>
+                      </div>
                     </Col>
                     <Col span={4}>
-                      <p>{post.people3}</p>
-                      <Icon
-                        type="frown"
-                        theme="filled"
-                        style={{ fontSize: '50px', color: '#faad14' }}
-                      />
-                      <h4>Sad</h4>
-                      <span>17</span>
+                      <div style={{cursor: 'pointer'}} onClick={ () => this.postReaction('sad') } >
+                        <p>{post.people3}</p>
+                        <Icon
+                          type="frown"
+                          theme="filled"
+                          style={{ fontSize: '50px', color: '#faad14' }}
+                        />
+                        <h4>Sad</h4>
+                        
+                        <span>{this.state.totalSadReactions}</span>
+                      </div>
                     </Col>
                     <Col span={4}>
-                      <p>{post.people4}</p>
-                      <Icon
-                        type="meh"
-                        theme="filled"
-                        style={{ fontSize: '50px', color: '#faad14' }}
-                      />
-                      <h4>Angry</h4>
-                      <span>19</span>
+                      <div style={{cursor: 'pointer'}} onClick={ () => this.postReaction('angry') } >
+                        <p>{post.people4}</p>
+                        <Icon
+                          type="meh"
+                          theme="filled"
+                          style={{ fontSize: '50px', color: '#faad14' }}
+                        />
+                        <h4>Angry</h4>
+                        <span>{this.state.totalAngryReactions}</span>
+                      </div>
                     </Col>
                   </Row>
                   <Row>
@@ -255,7 +302,7 @@ export class ViewNews extends React.Component {
 
                 <Row>
                   <Col span={24}>
-                    {console.log(comments)}
+                    {/* {console.log(comments)} */}
                   </Col>
                 </Row>
                 <Row>
@@ -268,7 +315,6 @@ export class ViewNews extends React.Component {
                       }
                       placeholder="Write ur comment here"
                     />
-                    {this.state.commentField}
                   </Col>
                   <Col span={4}>
                     <Button
@@ -281,7 +327,7 @@ export class ViewNews extends React.Component {
                 </Row>
                 <Row>
                   <Col span={20}>
-                    {console.log(comments)}
+                    {/* {console.log(comments)} */}
                     {/* <ul>{comments && comments.map((item) => {
                       return <li>{item.comment}</li>})}</ul> */}
                   </Col>
@@ -311,6 +357,8 @@ function mapDispatchToProps(dispatch) {
     update: (id, payload) => dispatch(a.updatePost(id, payload)),
     fetchPostComments: id => dispatch(a.fetchPostComments(id)),
     unmount: () => dispatch(a.unmountRedux()),
+    setPostReaction: (data) => dispatch(a.setPostReaction(data)),
+    getPostReactions: (postID) => dispatch(a.getPostReactions(postID)),
   };
 }
 

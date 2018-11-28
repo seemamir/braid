@@ -1,13 +1,16 @@
-from .models import Post,PostReaction,SavedPost, Comment
+from .models import Post,PostReaction,SavedPost, Comment, Profile
 from rest_framework import routers, serializers, viewsets
 from django.contrib.auth.models import User
-
 
 class PostSerializer(serializers.ModelSerializer):
   class Meta:
     model = Post
     fields = "__all__"
 
+class ProfileSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Profile
+    fields = "__all__"
 
 class PostReactionSerializer(serializers.ModelSerializer):
   class Meta:
@@ -38,7 +41,14 @@ class UserSerializer(serializers.ModelSerializer):
       email=validated_data['email'],
     )
 
+
     user.set_password(validated_data['password'])
     user.save()
+    profile = Profile.objects.create(
+      user=user,
+      bio='bio',
+      image='not_set'
+    )
+    profile.save()
 
     return user

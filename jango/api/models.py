@@ -1,12 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-REACTION_CHOICES = (
-  ('L', 'Laugh'),
-  ('S', 'Sad'),
-  ('A', 'Angry'),
-  ('H', 'Happy'),
-)
 
 # Create your models here.
 class Post(models.Model):
@@ -31,9 +25,15 @@ class Post(models.Model):
   def __str__(self):
     return self.title
 
+
+class Profile(models.Model):
+  user = models.ForeignKey(User,on_delete=models.CASCADE,unique=True)
+  bio = models.TextField()
+  image = models.TextField()
+
 class PostReaction(models.Model):
   post = models.ForeignKey('api.Post',on_delete=models.CASCADE)
-  reaction_type = models.CharField(max_length=20, choices=REACTION_CHOICES)
+  reaction_type = models.CharField(max_length=20)
   user = models.ForeignKey(User,on_delete=models.CASCADE)
 
   def __str__(self):

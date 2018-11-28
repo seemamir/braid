@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Post,PostReaction,SavedPost, Comment
-from .serializers import PostSerializer,PostReactionSerializer, SavedPostSerializer, UserSerializer,CommentSerializer
+from .models import Post,PostReaction,SavedPost, Comment,Profile
+from .serializers import PostSerializer,PostReactionSerializer, SavedPostSerializer, UserSerializer,CommentSerializer, ProfileSerializer
 
 from django.contrib.auth.models import User
 from rest_framework import status, viewsets
@@ -17,6 +17,13 @@ class PostViewSet(viewsets.ModelViewSet):
   filter_backends = (DjangoFilterBackend,)
   filter_fields = ('id','title','category')
 
+
+class ProfileViewSet(viewsets.ModelViewSet):
+  queryset = Profile.objects.all()
+  serializer_class = ProfileSerializer
+  filter_backends = (DjangoFilterBackend,)
+  filter_fields = ('id','user')
+
 class CommentViewSet(viewsets.ModelViewSet):
   queryset = Comment.objects.all()
   serializer_class = CommentSerializer
@@ -27,7 +34,7 @@ class PostReactionViewSet(viewsets.ModelViewSet):
   queryset = PostReaction.objects.all()
   serializer_class = PostReactionSerializer
   filter_backends = (DjangoFilterBackend,)
-  filter_fields = ('post','user')
+  filter_fields = ('post','user','reaction_type')
 
 class SavedPostViewSet(viewsets.ModelViewSet):
   queryset = SavedPost.objects.all()
