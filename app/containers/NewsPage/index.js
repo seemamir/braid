@@ -101,7 +101,7 @@ export class NewsPage extends React.Component {
                   rows="5"
                   id="bio"
                   style={{ width: '100%' }}
-                  value=" Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                  defaultValue=" Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                   Dolorem, ullam molestiae quod consequuntur nam, in cumque
                   debitis alias fugit, incidunt fuga quos excepturi. Non, nisi
                   ullam omnis labore vel praesentium. Lorem ipsum dolor sit,
@@ -120,8 +120,8 @@ export class NewsPage extends React.Component {
         </div>
         <div className="container">
           <Row>
-            {posts && posts.map(item =>{
-              return  <Col span={6}>
+            {posts && posts.map((item, i) =>{
+              return  <Col span={6} key={i}>
               <Card
                 style={{ width: 350 }}
                 className="news-box"

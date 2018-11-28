@@ -106,7 +106,7 @@ export class ViewNews extends React.Component {
     this.props.fetchPostComments(id);
     this.props.getPostReactions(id);
     
-    // setTimeout(() => this.filterPostReactions(), 1000);
+    setTimeout(() => this.filterPostReactions(), 1000);
   }
   componentWillUnmount(){
     this.props.unmount()
