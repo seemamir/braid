@@ -65,6 +65,14 @@ export function* getPostReactions(action) {
     console.log(error.message);
   }
 }
+export function* saveAsSavedPost(action) {
+  try {
+    const response = yield call(api.saveAsSavedPost,action.payload)
+    console.log(response);
+  } catch (e) {
+    console.log(e.message);
+  }
+}
 
 // Individual exports for testing
 export default function* viewNewsSaga() {
@@ -76,6 +84,7 @@ export default function* viewNewsSaga() {
   yield takeLatest(c.UPDATE_POST, update);
   yield takeLatest(c.SET_POST_REACTION, setPostReaction);
   yield takeLatest(c.GET_POST_REACTIONS, getPostReactions);
+  yield takeLatest(c.SAVE_AS_SAVED_POST, saveAsSavedPost);
 
   yield take(c.UNMOUNT_REDUX);
   yield cancel(post);

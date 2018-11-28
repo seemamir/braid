@@ -46,6 +46,14 @@ export function getPostReactions(payload) {
   };
 }
 
+export function saveAsSavedPost(payload) {
+  console.log(payload);
+  return {
+    type: c.SAVE_AS_SAVED_POST,
+    payload,
+  };
+}
+
 export function savePostReactions(payload) {
   return {
     type: c.SAVE_POST_REACTIONS,

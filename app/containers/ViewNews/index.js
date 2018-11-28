@@ -13,6 +13,8 @@ import { compose } from 'redux';
 
 import injectSaga from 'utils/injectSaga';
 import { get } from 'lodash';
+
+import makeSelectGlobalState from '../App/selectors';
 import injectReducer from 'utils/injectReducer';
 import { Row, Col, Icon, Button, Form } from 'antd';
 import styled from 'styled-components';
@@ -21,7 +23,6 @@ import reducer from './reducer';
 import saga from './saga';
 import Header from '../Headerr/Loadable';
 import * as a from './actions';
-import makeSelectGlobalState from '../App/selectors';
 const Wrapper = styled.div`
   margin: 20px auto;
   text-align: center;
@@ -84,7 +85,9 @@ export class ViewNews extends React.Component {
       reaction_type: type,
     };
     this.props.setPostReaction(data);
-    this.props.getPostReactions(postId);
+    setTimeout(() => {
+      this.props.getPostReactions(postId);
+    }, 500);
     setTimeout(() => {
       this.filterPostReactions();
     }, 1500);
@@ -151,10 +154,10 @@ export class ViewNews extends React.Component {
   handleSave = () => {
     const { id } = this.props.match.params;
     const payload = {
-      id,
-      ...this.state,
+      post: id,
+      user: this.props.globalState.user.id
     };
-    this.props.update(id, this.payload);
+    this.props.saveAsSavedPost(payload);
   };
 
   renderComments = () => {
@@ -386,6 +389,7 @@ function mapDispatchToProps(dispatch) {
     unmount: () => dispatch(a.unmountRedux()),
     setPostReaction: data => dispatch(a.setPostReaction(data)),
     getPostReactions: postID => dispatch(a.getPostReactions(postID)),
+    saveAsSavedPost: data => dispatch(a.saveAsSavedPost(data)),
   };
 }
 

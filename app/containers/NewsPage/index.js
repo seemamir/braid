@@ -14,8 +14,51 @@ import saga from './saga';
 import Header from '../Headerr/Loadable';
 import * as a from './actions';
 const { Meta } = Card;
+import {fetchSinglePost,deleteSavedPost} from "./api.js"
 
 /* eslint-disable react/prefer-stateless-function */
+
+
+class SavedPostView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.fetchPost(this.props.item.post);
+    this.state = {
+      post: {},
+      loaded: false,
+    }
+  }
+  fetchPost = async (id) => {
+    try {
+      let response = await fetchSinglePost(id);
+      this.setState({
+        loaded: true,
+        post: response.data
+      })
+    } catch (e) {
+      console.log(e.message)
+    }
+  }
+  deleteSavedPost = async (id) => {
+    await deleteSavedPost(id);
+    this.props.reload()
+  }
+  render() {
+    let item = this.props.item;
+    let title = get(this,'state.post.title','');
+    return (
+      
+        <Card
+          style={{ width: 350 }}
+          className="news-box"
+          cover={<img alt="example" src={item.thumbnail_image} />}
+        >
+          <h3>{title}</h3>
+        <button onClick={() => this.deleteSavedPost(item.id) } className="danger-btn">Delete</button>
+      </Card>
+    )
+  }
+}
 export class NewsPage extends React.Component {
   constructor(props) {
     super(props);
@@ -31,13 +74,11 @@ export class NewsPage extends React.Component {
     // const { user } = this.props.global;
     this.props.fetchPost(userID);
     this.props.fetchProfile(userID);
-    console.log(this.props);
     setTimeout(() => {
       this.setState({
         imageUrl: get(this.props, 'global.profile.image', ''),
         bio: get(this.props, 'global.profile.bio', ''),
       });
-      console.log(this.state);
     }, 1500);
   }
 
@@ -99,7 +140,6 @@ export class NewsPage extends React.Component {
       a.setState({
         [attribute]: reader.result,
       });
-      console.log(a.state);
     };
     reader.onerror = function(error) {};
   };
@@ -109,14 +149,11 @@ export class NewsPage extends React.Component {
     if (posts instanceof Array) {
       return posts.map((item, i) => (
         <Col span={6}>
-          <Card
-            style={{ width: 350 }}
-            className="news-box"
-            cover={<img alt="example" src={item.thumbnail_image} />}
-          >
-            <Meta title={item.title} description={item.main_sentence} />
-            <button className="danger-btn">Delete</button>
-          </Card>
+          <SavedPostView reload={() => {
+            let userID = get(this,'props.global.user.id',null);
+            // const { user } = this.props.global;
+            this.props.fetchPost(userID);
+          }} item={item} />
         </Col>
       ));
     }
