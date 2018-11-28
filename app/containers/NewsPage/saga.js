@@ -4,6 +4,7 @@ import * as a from './actions';
 import * as c from './constants';
 export function* index(action) {
   try {
+    console.log("running")
     const { id } = action;
     const response = yield call(api.fetchPosts);
     console.log(response.data);
