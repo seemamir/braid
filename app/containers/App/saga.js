@@ -15,6 +15,6 @@ export function* fetchUser() {
 // Individual exports for testing
 export default function* homeSaga() {
   // See example in containers/HomePage/saga.js
-  yield takeLatest(c.FETCH_POSTS, index);
+  // yield takeLatest(c.FETCH_POSTS, index);
   yield takeLatest(c.FETCH_USER, fetchUser);
 }
