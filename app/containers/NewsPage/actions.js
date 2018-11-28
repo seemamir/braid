@@ -17,6 +17,25 @@ export function fetchPosts() {
   };
 }
 
+export function updateProfile(payload) {
+  return {
+    type: c.UPDATE_PROFILE,
+    payload
+  };
+}
+export function fetchProfile(payload) {
+  return {
+    type: c.FETCH_PROFILE,
+    payload
+  };
+}
+export function setProfile(payload) {
+  return {
+    type: c.SET_PROFILE,
+    payload
+  };
+}
+
 export function setPosts(payload) {
   return {
     type: c.SET_POSTS,
