@@ -15,15 +15,30 @@ import * as a from './actions';
 const { Meta } = Card;
 /* eslint-disable react/prefer-stateless-function */
 export class NewsPage extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       loading: false,
+      imageUrl: '',
+      bio: '',
     };
   }
 
   componentDidMount() {
     this.props.fetchPost();
+    let user = window.localStorage.getItem('user') || '{}';
+    user = JSON.parse(user);
+    this.props.fetchProfile({userID: user.id});
+    console.log(this.props.newsPage);
+    setTimeout(() => {
+      console.log(this.props.newsPage.profile)
+      this.setState({
+        imageUrl: get(this.props,'newsPage.profile.image',''),
+        bio: get(this.props,'newsPage.profile.bio','')
+      });
+      console.log(this.state);
+    }, 1500);
+    
   }
 
   componentWillMount() {
@@ -60,6 +75,33 @@ export class NewsPage extends React.Component {
     }
   };
 
+  saveProfile = () => {
+    let profileID;
+    let profile = localStorage.getItem('profile') || '{}';
+    profile = JSON.parse(profile);
+    this.props.updateProfile({
+      id: profile.id,
+      image: this.state.imageUrl,
+      bio: this.state.bio
+    });
+  }
+  handleFileUpload = (e,attribute) => {
+    e.persist();
+    this.getBase64(e.target.files[0], attribute);
+  }
+  getBase64 = (file, attribute) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    const a = this;
+    reader.onload = function() {
+      a.setState({
+        [attribute]: reader.result,
+      });
+      console.log(a.state);
+    };
+    reader.onerror = function(error) {};
+  };
+
   renderPosts = () => {
     const posts = get(this, 'props.newsPage.posts', []);
     if (posts instanceof Array) {
@@ -80,13 +122,17 @@ export class NewsPage extends React.Component {
   };
 
   render() {
-    const uploadButton = (
-      <div>
-        <Icon type={this.state.loading ? 'loading' : 'camera'} />
-        <div className="ant-upload-text">Upload</div>
-      </div>
-    );
-
+    let image = <span></span>
+    if (this.state.imageUrl) {
+      image = <img style={{
+        'height': '119px',
+        'width': '110px',
+        'display': 'block',
+        'margin': 'auto',
+        'marginBottom': '20px',
+        'borderRadius': '50%',
+      }} src={this.state.imageUrl} />
+    }
     return (
       <div>
         <Helmet>
@@ -98,22 +144,26 @@ export class NewsPage extends React.Component {
           <Row>
             <Col span={6}>
               <Card style={{ marginRight: '20px', textAlign: 'center' }}>
-                <Upload
-                  name="avatar"
-                  listType="picture-card"
-                  className="avatar-uploader"
-                  showUploadList={false}
-                  action="//jsonplaceholder.typicode.com/posts/"
-                  beforeUpload={this.beforeUpload}
-                  onChange={this.handleChange}
+              <div>
+                {image}
+                <input
+                  style={{ display: 'none' }}
+                  className="one-upload-thumbnail"
+                  onChange={e =>
+                    this.handleFileUpload(e, 'imageUrl')
+                  }
+                  type="file"
+                />
+                <Button
+                  onClick={() =>
+                    document
+                      .querySelector('.one-upload-thumbnail')
+                      .click()
+                  }
                 >
-                  {this.state.imageUrl ? (
-                    <img src={this.state.imageUrl} alt="avatar" />
-                  ) : (
-                    uploadButton
-                  )}
-                </Upload>
-                <span>Username</span>
+                  Upload Photo
+                </Button>
+              </div>
               </Card>
             </Col>
             <Col span={14}>
@@ -122,19 +172,14 @@ export class NewsPage extends React.Component {
                   name="bio"
                   rows="5"
                   id="bio"
+                  value={this.state.bio}
+                  onChange={(e) => this.setState({bio: e.target.value}) }
                   style={{ width: '100%' }}
-                  defaultValue=" Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                  Dolorem, ullam molestiae quod consequuntur nam, in cumque
-                  debitis alias fugit, incidunt fuga quos excepturi. Non, nisi
-                  ullam omnis labore vel praesentium. Lorem ipsum dolor sit,
-                  amet consectetur adipisicing elit. Architecto commodi nisi
-                  odio magnam velit reiciendis aperiam natus, fugiat ratione
-                  illo sapiente esse ducimus odit. Quibusdam magnam aut unde
-                  laboriosam facere?"
+                  defaultValue={this.state.bio}
                   placeholder="Enter your bio"
                 />
               </Card>
-              <Button type="primary" style={{ marginTop: '20px' }}>
+              <Button onClick={()=>this.saveProfile()} type="primary" style={{ marginTop: '20px' }}>
                 Save
               </Button>
             </Col>
@@ -159,6 +204,8 @@ function mapDispatchToProps(dispatch) {
     dispatch,
     fetchPost: () => dispatch(a.fetchPosts()),
     unmount: () => dispatch(a.unmountRedux()),
+    updateProfile: (data) => dispatch(a.updateProfile(data)),
+    fetchProfile: (data) => dispatch(a.fetchProfile(data))
   };
 }
 

@@ -9,6 +9,7 @@ import * as c from './constants';
 
 export const initialState = fromJS({
   posts: [],
+  profile: {},
 });
 
 function newsPageReducer(state = initialState, action) {
@@ -17,6 +18,8 @@ function newsPageReducer(state = initialState, action) {
       return state;
     case c.SET_POSTS:
       return state.set('posts', action.payload);
+    case c.SET_PROFILE:
+      return state.set('profile', action.payload);
     default:
       return state;
   }
