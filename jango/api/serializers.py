@@ -26,7 +26,7 @@ class PostReactionSerializer(serializers.ModelSerializer):
 
 
 class SavedPostSerializer(serializers.ModelSerializer):
-  post = PostSerializer(many=False, read_only=False)
+  # post = PostSerializer(many=False, read_only=False)
   
   class Meta:
     model = SavedPost
