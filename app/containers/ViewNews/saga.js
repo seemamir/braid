@@ -1,5 +1,5 @@
 import { takeLatest, call, cancel, take, put } from 'redux-saga/effects';
-import {get} from 'lodash';
+import { get } from 'lodash';
 import * as c from './constants';
 import * as a from './actions';
 import * as api from './api';
@@ -33,8 +33,15 @@ export function* fetchComments(action) {
 
 export function* update(action) {
   try {
-    const { payload, id } = action;
-    const response = yield call(api.updatePostApi, id, payload);
+    const { payload } = action;
+    console.log(payload);
+    const data = {
+      main_sentence: 'main_sentence',
+      sentence2: 'sentence2',
+      sentence3: 'sentence3',
+      sentence4: 'sentence4',
+    };
+    yield call(api.updatePostApi, payload, data);
   } catch (error) {}
 }
 
@@ -42,20 +49,20 @@ export function* setPostReaction(action) {
   try {
     const response = yield call(api.setPostReaction, action.payload);
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
   }
 }
 
 export function* getPostReactions(action) {
   try {
     const response = yield call(api.getPostReactions, action.payload);
-    // run filterPostReactions to filter at the same time! 
-    let postReactions = get(response,'data',[]);
+    // run filterPostReactions to filter at the same time!
+    const postReactions = get(response, 'data', []);
     if (postReactions instanceof Array) {
       yield put(a.savePostReactions(postReactions));
     }
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
   }
 }
 

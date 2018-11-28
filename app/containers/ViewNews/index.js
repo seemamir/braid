@@ -21,7 +21,6 @@ import reducer from './reducer';
 import saga from './saga';
 import Header from '../Headerr/Loadable';
 import * as a from './actions';
-import { setUserId } from '../App/actions';
 
 const Wrapper = styled.div`
   margin: 20px auto;
@@ -117,7 +116,6 @@ export class ViewNews extends React.Component {
 
   handleRedirect = () => {
     const id = get(this, 'props.match.params.id', '');
-    this.props.setId(id);
     this.props.history.push('/news-page');
   };
 
@@ -136,8 +134,9 @@ export class ViewNews extends React.Component {
       this.setState({
         commentField: '',
       });
-
-      this.props.fetchPostComments(id);
+      setTimeout(() => {
+        this.props.fetchPostComments(id);
+      }, 500);
     }
   };
 
@@ -150,15 +149,20 @@ export class ViewNews extends React.Component {
 
   handleSave = () => {
     const { id } = this.props.match.params;
-    this.props.update(id, ...this.state);
+    const payload = {
+      id,
+      ...this.state,
+    };
+    this.props.update(id, this.payload);
   };
 
   renderComments = () => {
     const { comments } = this.props.viewNews;
-    console.log(this.props);
     if (comments instanceof Array) {
-      const commentsA = comments.map(c => <p>{c.comment}</p>);
-      return <div>{commentsA}</div>;
+      const commentsA = comments.map(c => (
+        <p key={Math.random() * 10}>{c.comment}</p>
+      ));
+      return <div className="comments">{commentsA}</div>;
     }
     return <p />;
   };
@@ -353,13 +357,6 @@ export class ViewNews extends React.Component {
                     </Button>
                   </Col>
                 </Row>
-                <Row>
-                  <Col span={20}>
-                    {/* {console.log(comments)} */}
-                    {/* <ul>{comments && comments.map((item) => {
-                      return <li>{item.comment}</li>})}</ul> */}
-                  </Col>
-                </Row>
               </Col>
             </Row>
           </div>
@@ -387,7 +384,6 @@ function mapDispatchToProps(dispatch) {
     unmount: () => dispatch(a.unmountRedux()),
     setPostReaction: data => dispatch(a.setPostReaction(data)),
     getPostReactions: postID => dispatch(a.getPostReactions(postID)),
-    setId: id => dispatch(setUserId(id)),
   };
 }
 
