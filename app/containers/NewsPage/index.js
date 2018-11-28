@@ -8,6 +8,7 @@ import { get } from 'lodash';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import makeSelectNewsPage from './selectors';
+import makeSelectGlobalState from '../App/selectors';
 import reducer from './reducer';
 import saga from './saga';
 import Header from '../Headerr/Loadable';
@@ -122,6 +123,7 @@ export class NewsPage extends React.Component {
   };
 
   render() {
+    console.log(this.props)
     let image = <span></span>
     if (this.state.imageUrl) {
       image = <img style={{
@@ -197,6 +199,7 @@ NewsPage.propTypes = {};
 
 const mapStateToProps = createStructuredSelector({
   newsPage: makeSelectNewsPage(),
+  global: makeSelectGlobalState(),
 });
 
 function mapDispatchToProps(dispatch) {

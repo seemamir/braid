@@ -3,6 +3,7 @@
  */
 
 import { createSelector } from 'reselect';
+import { fromJS } from 'immutable';
 
 const selectGlobal = state => state.get('global');
 
@@ -34,6 +35,10 @@ const isLogin = () =>
  * @return {Object} currently logged in user info.
  */
 
+const makeSelectGlobalState = () => 
+  createSelector(selectGlobal, globalState => globalState && fromJS(globalState).toJS())
+
+export default makeSelectGlobalState;
 export {
   selectGlobal,
   makeSelectEmail,
