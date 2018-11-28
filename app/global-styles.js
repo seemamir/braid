@@ -55,6 +55,12 @@ const GlobalStyle = createGlobalStyle`
       margin: 15px 0 !important;
     }
   }
+  .logo{
+    float:left;
+    color:#555;
+    font-weight:bold;
+    padding-left:20px;
+  }
   .ant-alert{
     margin-bottom: 30px;
   }

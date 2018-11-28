@@ -11,28 +11,29 @@ export function defaultAction() {
     type: c.DEFAULT_ACTION,
   };
 }
-export function fetchPosts() {
+export function fetchPosts(id) {
   return {
     type: c.FETCH_POSTS,
+    id,
   };
 }
 
 export function updateProfile(payload) {
   return {
     type: c.UPDATE_PROFILE,
-    payload
+    payload,
   };
 }
 export function fetchProfile(payload) {
   return {
     type: c.FETCH_PROFILE,
-    payload
+    payload,
   };
 }
 export function setProfile(payload) {
   return {
     type: c.SET_PROFILE,
-    payload
+    payload,
   };
 }
 
