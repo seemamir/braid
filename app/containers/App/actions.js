@@ -7,6 +7,13 @@ export function loggedInAction(payload) {
   };
 }
 
+export function fetchUser(payload) {
+  return {
+    type: c.FETCH_PROFILE,
+    payload,
+  };
+}
+
 export function fetchProfile(payload) {
   return {
     type: c.FETCH_PROFILE,
